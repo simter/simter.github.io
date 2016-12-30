@@ -1,0 +1,10 @@
+.metadata
+.settings
+.classpath
+.project
+.vscode
+.DS_Store
+.idea
+*.log
+*.iml
+node_modules
