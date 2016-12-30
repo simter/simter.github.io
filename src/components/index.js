@@ -2,7 +2,7 @@ import Vue from 'vue'
 import './index.css'
 import layout from './layout.vue'
 import sidebar from './sidebar.vue'
-import readme from '../README.md'
+import readme from '../../README.md'
 
 new Vue({
   el: '#app',

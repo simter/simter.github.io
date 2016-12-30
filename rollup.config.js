@@ -8,7 +8,7 @@ import md from 'rollup-plugin-md'
 var external = Object.keys(require('./package.json').dependencies);
 
 export default {
-  entry: 'src/index.js',
+  entry: 'src/components/index.js',
   external: external,
   plugins: [
     md(),

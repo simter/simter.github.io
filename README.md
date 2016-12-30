@@ -7,7 +7,7 @@ index.html                      - 网站入口文件
 data                            - 网站使用的 json 数据文件
 libs                            - 第三方依赖库
 
-src                             - 源代码
+src                             - 网站源码
 test                            - 测试
 dist/index.js                   - src 下各组件用 Rollup 打包后的文件
 ```
