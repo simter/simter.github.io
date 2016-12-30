@@ -1,0 +1,32 @@
+html {
+  background-color: #000;
+  color: #888;
+  font-family: "微软雅黑", "宋体", sans-serif;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+pre {
+  border-style: solid; 
+  border-color:  #2b2b2b; 
+  border-width: 1px; 
+  margin: 0;
+  padding: 0.5em .5em;
+  background-color: #001;
+  line-height: 1.5em;
+}
+
+a {
+  color: #880;
+  text-decoration: none;
+}
+a:focus {
+  color: #881;
+}
