@@ -26,10 +26,11 @@
     "clean": "rm -rf dist test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
-    "build": "rollup -c -f iife -o dist/index.js",
+    "build": "npm run minHtml && rollup -c -f iife -o dist/index.js",
     "prepublish": "npm test",
-    "dev": "npm run start & rollup -c -f iife -w -o dist/index.js",
-    "watch": "rollup -c -f iife -w -o dist/index.js"
+    "dev": "npm run minHtml && npm run start & rollup -c -f iife -w -o dist/index.js",
+    "watch": "rollup -c -f iife -w -o dist/index.js",
+    "minHtml": "minimize --output index.html src/index.html"
   },
   "dependencies": {
     "vue": "^2.1.8",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "cssnano": "^3.9.1",
+    "minimize": "^2.0.0",
     "rollup": "^0.38.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-md": "0.0.7",
