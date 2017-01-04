@@ -26,10 +26,10 @@
     "clean": "rm -rf test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
-    "build": "npm run minHtml && rollup -c -f iife -o dist/index.js",
+    "build": "npm run minHtml && rollup -c",
     "prepublish": "npm test",
-    "dev": "npm run minHtml & rollup -c -f iife -w -o dist/index.js & node dist/server.js",
-    "watch": "rollup -c -f iife -w -o dist/index.js",
+    "dev": "npm run minHtml & rollup -c & node dist/server.js",
+    "watch": "rollup -c -w",
     "minHtml": "minimize --output dist/index.html src/index.html"
   },
   "dependencies": {

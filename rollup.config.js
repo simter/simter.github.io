@@ -6,20 +6,24 @@ import uglify from 'rollup-plugin-uglify'
 import json from 'rollup-plugin-json'
 import md from 'rollup-plugin-md'
 
-var external = Object.keys(require('./package.json').dependencies);
+let external = Object.keys(require('./package.json').dependencies)
+let minified = true
+let plugins = [
+  json(),
+  md(),
+  vue(),
+  postcss({
+    plugins: [cssnano], // minified CSS
+    extensions: ['.css']
+  }),
+  buble()
+]
+if (minified) plugins.push(uglify())
 
 export default {
   entry: 'src/components/index.js',
+  format: 'iife',
+  dest: 'dist/index.' + (minified ? '.min.js' : '.js'),
   external: external,
-  plugins: [
-    json(),
-    md(),
-    vue(),
-    postcss({
-      plugins: [cssnano], // minified CSS
-      extensions: ['.css']
-    }),
-    buble(),
-    uglify()
-  ]
-};
+  plugins: plugins
+}
