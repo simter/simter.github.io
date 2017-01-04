@@ -1,9 +1,6 @@
 <template>
   <div class='layout'>
-    <header>
-      <img class='logo' src='logo.png' title='©2016 广州市广发出租汽车有限公司'>
-    </header>
-
+    <!--<header><img class='logo' src='favicon.ico' title='©2016 广州市广发出租汽车有限公司'></header>-->
     <div>
       <aside>
         <slot name='sidebar'>Add sidebar here</slot>
@@ -12,10 +9,7 @@
         <slot name='main'>Add main content here</slot>
       </main>
     </div>
-
-    <footer>
-      <a href='http://www.gftaxi.cn' target='_blank'>©2016 广州市广发出租汽车有限公司</a>
-    </footer>
+    <!--<footer><a href='http://www.gftaxi.cn' target='_blank'>©2016 广州市广发出租汽车有限公司</a></footer>-->
   </div>
 </template>
 

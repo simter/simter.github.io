@@ -12,7 +12,7 @@ new Vue({
     'app-sidebar': sidebar
   },
   data: {
-    hello: readme,
+    mainContent: readme,
     sidebarItems: sidebarItems
   },
   methods: {

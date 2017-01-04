@@ -1,19 +1,17 @@
-# [Simter 文档](http://simter.tech)
+# [Simter 网站源码](https://github.com/simter/simter.github.io)
+
+访问 [Simter 网站](http://simter.github.io)。
 
 ## 目录结构
 
 ```
-index.html                      - 网站入口文件
-data                            - 网站使用的 json 数据文件
-libs                            - 第三方依赖库
-
 src                             - 网站源码
+dist                            - src 源码的打包发布目录
 test                            - 测试
-dist/index.js                   - src 下各组件用 Rollup 打包后的文件
 ```
 
 ## 构建
 
 ```bash
-npm build
+npm run build
 ```

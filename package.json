@@ -1,8 +1,8 @@
 {
-  "name": "simter-website",
+  "name": "simter-website-source",
   "version": "0.1.0",
   "author": "RJ.Hwang <rongjihuang@gmail.com>",
-  "description": "Simter Document",
+  "description": "Simter Website Source",
   "keywords": [
     "simter",
     "docs"
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
-  "homepage": "http://simter.tech",
+  "homepage": "http://simter.github.io",
   "bugs": {
     "url": "https://github.com/simter/simter.github.io/issues"
   },
@@ -23,14 +23,14 @@
     "url": "https://github.com/simter/simter.github.io.git"
   },
   "scripts": {
-    "clean": "rm -rf dist test/temp",
+    "clean": "rm -rf test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
     "build": "npm run minHtml && rollup -c -f iife -o dist/index.js",
     "prepublish": "npm test",
-    "dev": "npm run minHtml && npm run start & rollup -c -f iife -w -o dist/index.js",
+    "dev": "npm run minHtml & rollup -c -f iife -w -o dist/index.js & node dist/server.js",
     "watch": "rollup -c -f iife -w -o dist/index.js",
-    "minHtml": "minimize --output index.html src/index.html"
+    "minHtml": "minimize --output dist/index.html src/index.html"
   },
   "dependencies": {
     "vue": "^2.1.8",
