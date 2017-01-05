@@ -9,7 +9,7 @@
         <slot name='main'>Add main content here</slot>
       </main>
     </div>
-    <!--<footer><a href='http://www.gftaxi.cn' target='_blank'>©2016 广州市广发出租汽车有限公司</a></footer>-->
+    <footer><a href='https://opensource.org/licenses/MIT' target='_blank'>MIT License.</a> Copyright ©2017 RJ Hwang.</footer>
   </div>
 </template>
 
@@ -62,15 +62,16 @@
   }
 
   .layout > footer {
-    display: none;
+    /*display: none;*/
     flex-grow: 0;
     border-top: 1px solid #2b2b2b;
-    color: #757582;
+    color: #666;
     text-align: center;
+    font-size: 80%;
+    padding: 0.25em;
   }
   .layout > footer a {
     color: inherit;
     text-decoration: none;
-    font-size: 80%;
   }
 </style>
