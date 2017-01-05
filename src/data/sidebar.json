@@ -1,38 +1,42 @@
 [
   {
-    id: 'code-rule',
-    label: '编码规范'
+    "id": "about",
+    "label": "概述"
   },
   {
-    id: 'rest-rule',
-    label: 'REST规范',
-    children: [
+    "id": "code-rule",
+    "label": "编码规范"
+  },
+  {
+    "id": "rest-rule",
+    "label": "REST规范",
+    "children": [
       {
-        id: 'sub1',
-        label: '子菜单1'
+        "id": "sub1",
+        "label": "子菜单1"
       },
       {
-        id: 'sub2',
-        label: '子菜单2',
-        children: [
+        "id": "sub2",
+        "label": "子菜单2",
+        "children": [
           {
-            id: 'sub21',
-            label: '3级菜单1'
+            "id": "sub21",
+            "label": "3级菜单1"
           },
           {
-            id: 'sub22',
-            label: '3级菜单2'
+            "id": "sub22",
+            "label": "3级菜单2"
           }
         ]
       },
       {
-        id: 'sub3',
-        label: '子菜单3'
+        "id": "sub3",
+        "label": "子菜单3"
       }
     ]
   },
   {
-    id: 'vo-rule',
-    label: 'VO规范'
+    "id": "vo-rule",
+    "label": "VO规范"
   }
 ]
