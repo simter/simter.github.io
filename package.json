@@ -22,15 +22,20 @@
     "type": "git",
     "url": "https://github.com/simter/simter.github.io.git"
   },
+  "watches": {
+    "min-index": "src/index.html"
+  },
   "scripts": {
+    "start": "concurrently \"npm run http-server\" \"npm run watch-min-index\" \"npm run watch-rollup\"",
     "clean": "rm -rf test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
-    "build": "npm run minHtml && rollup -c",
+    "build": "npm run min-index && rollup -c",
     "prepublish": "npm test",
-    "dev": "npm run minHtml & rollup -c & node dist/server.js",
-    "watch": "rollup -c -w",
-    "minHtml": "minimize --output dist/index.html src/index.html"
+    "http-server": "node dist/server.js",
+    "min-index": "minimize --output dist/index.html src/index.html",
+    "watch-min-index": "rerun-script",
+    "watch-rollup": "rollup -c -w"
   },
   "dependencies": {
     "vue": "^2.1.8",
@@ -39,8 +44,10 @@
   },
   "devDependencies": {
     "ava": "^0.17.0",
+    "concurrently": "^3.1.0",
     "cssnano": "^3.9.1",
     "minimize": "^2.0.0",
+    "rerun-script": "^0.6.0",
     "rollup": "^0.38.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-json": "^2.1.0",
