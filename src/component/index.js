@@ -2,7 +2,7 @@ import Vue from 'vue'
 import './index.css'
 import layout from './layout.vue'
 import sidebar from './sidebar.vue'
-import about from '../chapters/01-about.md'
+import about from '../chapter/about.md'
 import sidebarItems from '../data/sidebar.json'
 
 new Vue({

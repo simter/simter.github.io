@@ -21,7 +21,7 @@ let plugins = [
 if (minified) plugins.push(uglify())
 
 export default {
-  entry: 'src/components/index.js',
+  entry: 'src/component/index.js',
   format: 'iife',
   dest: 'dist/index' + (minified ? '.min.js' : '.js'),
   external: external,
