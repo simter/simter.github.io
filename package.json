@@ -27,7 +27,7 @@
     "convert-md-to-html": "src/chapter/*.md"
   },
   "scripts": {
-    "start": "concurrently \"npm run http-server\" \"npm run watch-to-rerun\" \"npm run watch-rollup\"",
+    "start": "concurrently \"npm run http-server\" \"npm run watch-to-rerun\" \"npm run min-index\" \"npm run convert-md-to-html\" \"npm run watch-rollup\"",
     "clean": "rm -rf test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
