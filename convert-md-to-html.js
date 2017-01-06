@@ -2,10 +2,12 @@ const path = require('path')
 const fs = require('fs')
 const fsp = require('fs-promise')
 const md = require('markdown-it')()
-process.chdir(__dirname)
+const Minimize = require('minimize'), min = new Minimize();
+const watch = require('chokidar').watch
 
-const fromDir = path.resolve('src/chapters')
-const toDir = path.resolve('dist/chapters')
+process.chdir(__dirname)
+const fromDir = path.resolve('src/chapter')
+const toDir = path.resolve('dist/chapter')
 convertDir(fromDir, toDir)
 
 function convertDir(fromDir, toDir) {
@@ -23,5 +25,5 @@ function convertDir(fromDir, toDir) {
 
 function convertFile(fromFile, toFile) {
   console.log('convert %s', fromFile)
-  return fsp.readFile(fromFile).then(content => fsp.writeFile(toFile, md.render(content.toString())))
+  return fsp.readFile(fromFile).then(content => fsp.writeFile(toFile, min.parse(md.render(content.toString()))))
 }
