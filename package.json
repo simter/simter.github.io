@@ -51,6 +51,7 @@
     "cssnano": "^3.9.1",
     "fs-promise": "^1.0.0",
     "markdown-it": "^8.2.2",
+    "markdown-it-named-headers": "0.0.4",
     "minimize": "^2.0.0",
     "rerun-script": "^0.6.0",
     "rollup": "^0.38.2",

@@ -9,7 +9,7 @@
   },
   {
     "id": "rest-rule",
-    "label": "REST 规范"
+    "label": "REST 接口设计规范"
   },
   {
     "id": "unit-test-rule",

@@ -6,22 +6,33 @@ const Minimize = require('minimize'), min = new Minimize();
 const watch = require('chokidar').watch
 
 process.chdir(__dirname)
-const fromDir = path.resolve('src/chapter')
-const toDir = path.resolve('dist/chapter')
-convertDir(fromDir, toDir)
+const chapterSubDir = 'chapter'
+const sourceDir = path.resolve('src')
+const targetDir = path.resolve('dist')
 
-function convertDir(fromDir, toDir) {
-  if (!fs.existsSync(toDir)) fs.mkdirSync(toDir)
-  fsp.readdir(fromDir)
-    .then(files => {
-      files.forEach(f => {
-        let fromFile = path.resolve(fromDir, f)
-        let toFile = path.resolve(toDir, f.replace(path.extname(f), '.html'))
-        convertFile(fromFile, toFile).catch(err => console.log(err))
-      });
-    })
-    .catch(err => console.log(err))
-}
+const sourceChapterDir = path.resolve(sourceDir, chapterSubDir);
+const targetCompiledDir = path.resolve(targetDir, 'compiled-' + chapterSubDir);
+const targetRedirectDir = path.resolve(targetDir, chapterSubDir);
+if (!fs.existsSync(targetCompiledDir)) fs.mkdirSync(targetCompiledDir)
+if (!fs.existsSync(targetRedirectDir)) fs.mkdirSync(targetRedirectDir)
+
+const redirectContent = min.parse(fs.readFileSync('src/chapter/redirect.html').toString())
+
+fsp.readdir(sourceChapterDir)
+  .then(files => {
+    files.forEach(f => {
+      if (!f.endsWith('.md')) return;
+      let sourceFile = path.resolve(sourceChapterDir, f)
+
+      let newName = f.replace(path.extname(f), '.html');
+      let compiledFile = path.resolve(targetCompiledDir, newName)
+      convertFile(sourceFile, compiledFile).catch(err => console.log(err))
+      
+      let redirectFile = path.resolve(targetRedirectDir, newName)
+      fs.writeFileSync(redirectFile, redirectContent)
+    });
+  })
+  .catch(err => console.log(err))
 
 function convertFile(fromFile, toFile) {
   console.log('convert %s', fromFile)
