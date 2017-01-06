@@ -17,9 +17,11 @@ new Vue({
   },
   methods: {
     clickSidebarItem: function (item) {
-      console.log("clickSidebarItem=", JSON.stringify(item))
-      console.log("all=", JSON.stringify(this.sidebarItems))
-      // 加载对应的页面内容到 main 区域中
+      // console.log("item=%s", JSON.stringify(item))
+      // fetch chapter content and show it in main region
+      fetch(`chapter/${item.id}.html`)
+        .then(res => res.text())
+        .then(html => this.mainContent = html)
     }
   }
 })
