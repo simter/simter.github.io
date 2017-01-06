@@ -23,18 +23,20 @@
     "url": "https://github.com/simter/simter.github.io.git"
   },
   "watches": {
-    "min-index": "src/index.html"
+    "min-index": "src/index.html",
+    "convert-md-to-html": "src/chapter/*.md"
   },
   "scripts": {
-    "start": "concurrently \"npm run http-server\" \"npm run watch-min-index\" \"npm run watch-rollup\"",
+    "start": "concurrently \"npm run http-server\" \"npm run watch-to-rerun\" \"npm run watch-rollup\"",
     "clean": "rm -rf test/temp",
     "test": "ava test/index.js",
     "pretest": "npm run build",
-    "build": "npm run min-index && rollup -c",
+    "build": "npm run min-index && npm run convert-md-to-html && rollup -c",
     "prepublish": "npm test",
     "http-server": "node dist/server.js",
     "min-index": "minimize --output dist/index.html src/index.html",
-    "watch-min-index": "rerun-script",
+    "convert-md-to-html": "node convert-md-to-html.js",
+    "watch-to-rerun": "rerun-script",
     "watch-rollup": "rollup -c -w"
   },
   "dependencies": {
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "ava": "^0.17.0",
+    "chokidar": "^1.6.1",
     "concurrently": "^3.1.0",
     "cssnano": "^3.9.1",
     "fs-promise": "^1.0.0",
