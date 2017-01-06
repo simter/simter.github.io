@@ -11,7 +11,7 @@
 <body>
   <app-layout id='app'>
     <app-sidebar slot="sidebar" :items='sidebarItems' @click='clickSidebarItem'></app-sidebar>
-    <span slot="main" v-html='mainContent'></span>
+    <div slot="main" v-html='mainContent' id='main'></div>
   </app-layout>
 
   <!-- https://github.com/blog/273-github-ribbons -->
