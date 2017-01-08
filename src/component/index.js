@@ -10,7 +10,7 @@ let cacheChapters = {}
 function getChapter(id) {
   if (cacheChapters[id]) return Promise.resolve(cacheChapters[id]);
 
-  return fetch(`compiled-chapter/${id}.html`)
+  return fetch(`/compiled-chapter/${id}.html`)
     .then(res => {
       if (res.ok) { // cache the successful response content
         return res.text().then(html => {
@@ -39,13 +39,25 @@ let vm = new Vue({
     clickSidebarItem: function (item) {
       if (history.state && history.state.id === item.id) return
       // record state
-      history.pushState(item, item.label, `chapter/${item.id}.html`);
+      history.pushState(item, item.label, `/chapter/${item.id}.html`);
       // get chapter content and show it in main region
       getChapter(item.id).then(content => this.mainContent = content)
     }
   },
   created: function () {
     console.log('location.hash=', location.hash)
+    if (location.hash) {
+      const to = location.hash.substr(1)
+      let id = to.substr(to.lastIndexOf('/') + 1)
+      id = id.substring(0, id.indexOf('.html'))
+      if (id) {
+        // replace hash path to real path
+        history.replaceState(null, null, to)
+
+        // load hash chapter content
+        getChapter(id).then(content => this.mainContent = content)
+      }
+    }
   },
   ready: function () {
     console.log('ready')
@@ -53,6 +65,7 @@ let vm = new Vue({
 })
 
 window.onpopstate = function (event) {
+  console.log("onpopstate=%s", JSON.stringify(event))
   if (!event.state) return
   console.log('location=%s, state=%s', location.href, JSON.stringify(event.state))
   vm.mainContent = cacheChapters[event.state.id] || ''
