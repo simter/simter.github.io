@@ -1,6 +1,6 @@
 <template>
   <li :class='{ node: true, active: active }'>
-    <a :href='name' @click.prevent='activate'>{{name}}</a>
+    <a :href='"/charpter/"+id+".html"' @click.prevent='activate'>{{name}}</a>
     <tree v-if='children' :nodes='children' :event-hub='eventHub' @node-activated='$emit("node-activated", arguments[0])'></tree>
   </li>
 </template>
