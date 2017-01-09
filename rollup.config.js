@@ -7,7 +7,7 @@ import json from 'rollup-plugin-json'
 import md from 'rollup-plugin-md'
 
 let external = Object.keys(require('./package.json').dependencies)
-let minified = true
+let minified = false
 let plugins = [
   json(),
   md(),

@@ -16,6 +16,30 @@
     "label": "单元测试"
   },
   {
+    "id": "subA",
+    "label": "子菜单A",
+    "children": [
+      {
+        "id": "subA1",
+        "label": "子菜单A1"
+      }
+    ]
+  },
+  {
+    "id": "subB",
+    "label": "子菜单B",
+    "children": [
+      {
+        "id": "subB1",
+        "label": "子菜单B1"
+      },
+      {
+        "id": "subB2",
+        "label": "子菜单B2"
+      }
+    ]
+  },
+  {
     "id": "test-menu",
     "label": "菜单测试",
     "children": [

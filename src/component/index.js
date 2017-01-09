@@ -2,41 +2,53 @@ import Vue from 'vue'
 import './index.css'
 import './md.css'
 import layout from './layout.vue'
-import sidebar from './sidebar.vue'
+import tree from './tree.vue'
 import about from '../chapter/about.md'
 import sidebarItems from '../data/sidebar.json'
+
+function getItem(id, items) {
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].id === id) return items[i]
+    else if (items[i].children) return getItem(id, items[i].children)
+  }
+  return null;
+}
 
 let vm = new Vue({
   el: '#app',
   components: {
     'app-layout': layout,
-    'app-sidebar': sidebar
+    'app-tree': tree
   },
   data: {
     sidebarItems: sidebarItems
   },
   methods: {
-    clickSidebarItem(item) {
+    sidebarItemActivated(item) {
+      console.log('sidebarItemActivated id=%s', item.id)
       if (history.state && history.state.id === item.id) return
       // record state
       history.pushState(item, item.label, `/chapter/${item.id}.html`);
       // get chapter content and show it in main region
-      showChapter(this.getChapter(item.id))
+      this.showChapter(this.getChapter(item.id))
     },
     showChapter(chapter) {
-      if (chapter.active) return
+      if (!chapter || chapter.active) return
       this.sidebarItems.forEach(item => this.$set(item, 'active', (item.id == chapter.id)))
       if (!chapter.content) this.fetchChapterContent(chapter)
+      //console.log("showChapter=%s", JSON.stringify(chapter))
     },
     getChapter(id) {
-      let chapter = this.sidebarItems.filter(item => item.id === id)
-      return chapter.length ? chapter[0] : null
+      console.log('id=', id)
+      let chapter = getItem(id, this.sidebarItems)
+      //console.log('chapter=', JSON.stringify(chapter))
+      return chapter
     },
     fetchChapterContent(chapter) {
-      if (!chapter) return Promise.reject(`no id '${id}'`)
+      if (!chapter) return Promise.reject(`no id '${chapter.id}'`)
       if (chapter.content) return Promise.resolve(chapter.content)
 
-      return fetch(`/compiled-chapter/${id}.html`)
+      return fetch(`/compiled-chapter/${chapter.id}.html`)
         .then(res => {
           if (res.ok) { // cache the successful response content
             return res.text().then(html => {
@@ -46,6 +58,7 @@ let vm = new Vue({
           } else {      // no cache but error message
             return res.text().then(msg => {
               this.$set(chapter, 'error', `${res.status} ${msg || res.statusText}`)
+              //console.log('chapter.error=', chapter.error)
               return chapter
             })
           }
@@ -54,14 +67,18 @@ let vm = new Vue({
   },
   computed: {
     mainContent() {
-      for (let item of this.sidebarItems) {
-        if (item.active) return item.content
+      for (let i = 0; i < this.sidebarItems.length; i++) {
+        let item = this.sidebarItems[i]
+        if (item.active) {
+          // console.log("mainContent=", item.content || item.error)
+          return item.content || item.error
+        }
       }
 
       // default show about page
-      let aboutItem = this.sidebarItems.filter(item => item.id = 'about')[0]
-      this.$set(aboutItem, 'active', true)
-      this.$set(aboutItem, 'content', about)
+      //let aboutItem = this.sidebarItems.filter(item => item.id = 'about')[0]
+      //this.$set(aboutItem, 'active', true)
+      //this.$set(aboutItem, 'content', about)
     }
   },
   created: function () {
@@ -76,7 +93,7 @@ let vm = new Vue({
         history.replaceState(chapter, chapter.label, to)
 
         // load hash chapter content
-        showChapter(chapter)
+        this.showChapter(chapter)
       }
     }
   }
