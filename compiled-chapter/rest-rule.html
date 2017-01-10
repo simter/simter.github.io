@@ -1,0 +1,71 @@
+<h1>REST 接口设计规范</h1><h2><strong>概述</strong></h2><p>本规范定义设计各种 REST 服务接口需要遵循的一般性准则，以保证各个项目、模块提供的 REST 服务接口符合统一的设计规范，方便项目、模块之间的接口对接。</p><h2><strong>适用范围</strong></h2><p>本规范只针对 REST 数据接口，对于非数据接口，如动态模板等可能并不包含在此文档的说明范围内。</p><h2><strong>设计规范</strong></h2><h3><strong>1. URL 命名规范</strong></h3><p>REST URL 由资源路径、名称和请求参数组合而成，基本模式为：</p><pre><code>/resource-path-1/.../resource-name[?param1=value1[&amp;param2=value2...]]
+</code></pre><p><strong>说明：</strong></p><ol><li>resource-path、resource-name 为资源路径、名称，使用名词单数形式，字母全部用小写，单词间用中横线 &quot;-&quot; 连接</li><li>param 为参数名称，可以无也可以包含1个或多个，多个参数间用符号 &quot;&amp;&quot; 连接，与 resource-path 间用符号 &quot;?&quot; 连接</li><li>value 的值必要时必须进行转义，避免与 URL 保留字冲突（如 ?、&amp; 等）</li></ol><p><strong>正确的例子：</strong></p><pre><code>GET    /user-address        -- 用户地址列表
+GET    /user?search=x       -- 带过滤条件 x 的用户列表
+GET    /user/x              -- 获取 ID=x 的用户
+DELETE /user/x              -- 删除 ID=x 的用户
+POST   /user                -- 新建一个用户
+PUT    /user/x              -- 更新 ID=x 的用户信息
+GET    /user/admin/address  -- 用户 admin 地址列表
+</code></pre><p><strong>错误的例子：</strong></p><pre><code>GET    /users              -- 误用单词复数
+GET    /userAddress        -- 误用驼峰命名
+DELETE /userAddress/delete -- 不能用动词
+</code></pre><h3><strong>2. REST CRUD 规范</strong></h3><h4><strong>2.1. 创建新资源 (Create) - C/CRUD</strong></h4><p>新建资源使用如下两种方式之一：</p><ol><li>使用 POST 创建未知资源ID（资源标识符）的新资源</li><li>使用 PUT 创建指定资源ID（资源标识符）的新资源</li></ol><p>使用 POST 创建新资源时要特别注意，由于 POST 是非幂等的，多次提交相同的 POST 请求会导致重复创建多份信息相同但资源ID不同的新资源，这可能并不是所期待的结果，除非服务端使用了额外的技术做了特别的防重复提交处理。</p><p>使用 PUT 创建新资源时，因为 PUT 是幂等的，多次提交也只会创建同一份资源。</p><p>请求体 (body) 不要求提交资源所有的属性值，提交的属性值用于设置资源的属性，没有提交的属性则由服务端视情况设置默认值。</p><p>不管使用哪种方式，资源创建成功后服务端需如下响应：</p><ol><li>请求体 (body) 承载要提交的资源属性信息，格式统一使用 json 对象的字符串压缩格式 (无空格、换行和注解)，如 {&quot;code&quot;:&quot;xm&quot;,&quot;name&quot;:&quot;小明&quot;}</li><li>返回 &quot;201 Created&quot; 状态码</li><li>通过 Location 响应头返回新建资源的位置，特别是使用方式 1 时</li><li>如果需要返回更多额外的信息给请求方，则通过响应体 (body) 来承载，格式统一使用 json 对象的字符串压缩格式 (无空格、换行和注解)，如返回新建资源的ID和创建时间信息：{&quot;id&quot;:123,&quot;ts&quot;:&quot;2016-01-01T10:30&quot;}</li></ol><p>POST 请求范例：</p><pre><code>HTTP/1.1 POST /user
+
+{&quot;code&quot;:&quot;xm&quot;,&quot;name&quot;:&quot;小明&quot;}
+</code></pre><p>POST 响应范例：(成功)</p><pre><code>201 Created
+Location: http://api.com/user/1234567
+
+{&quot;id&quot;:&quot;x&quot;,&quot;ts&quot;:&quot;2016-01-01T10:30&quot;}
+</code></pre><p>PUT 请求范例：</p><pre><code>HTTP/1.1 POST /user/x
+
+{&quot;code&quot;:&quot;xm&quot;,&quot;name&quot;:&quot;小明&quot;}
+</code></pre><p>PUT 响应范例：(成功)</p><pre><code>201 Created
+
+{&quot;id&quot;:&quot;x&quot;,&quot;ts&quot;:&quot;2016-01-01T10:30&quot;}
+</code></pre><p>如果请求失败，服务端需如下响应：</p><ol><li>相应的 4xx 或 5xx 状态码</li><li>通过响应体 body 返回失败的描述性信息，格式为纯文本，如：</li></ol><pre><code>403 Forbidden 
+
+权限不足！
+</code></pre><h4><strong>2.2. 更新资源 (Update) - U/CRUD</strong></h4><p>更新资源有更新资源全部属性和更新资源部分属性两种情况，更新部分属性是应用中最常用的。执行资源更新前肯定已经预先知道资源的ID，重复执行相同的更新操作，在服务端对资源状态所产生的改变应该是相同的，符合幂等性原则，因此更新资源统一使用 PUT 方法。</p><p>资源更新成功后服务端需如下响应：</p><ol><li>请求体 (body) 承载要提交的资源属性信息，格式统一使用 json 对象的字符串压缩格式 (无空格、换行和注解)，如 {&quot;code&quot;:&quot;xm&quot;,&quot;name&quot;:&quot;小明&quot;}</li><li>返回 &quot;200 OK&quot; 状态码</li><li>如果需要返回更多额外的信息给请求方，则通过响应体 (body) 来承载，格式统一使用 json 对象的字符串压缩格式 (无空格、换行和注解)，如返回更新资源的实际时间：{&quot;ts&quot;:&quot;2016-01-01T10:30&quot;}</li></ol><p>请求范例：</p><pre><code>HTTP/1.1 PUT /user/x
+
+{&quot;code&quot;:&quot;xm&quot;,&quot;name&quot;:&quot;小明&quot;}
+</code></pre><p>响应范例：(成功)</p><pre><code>200 OK
+
+{&quot;ts&quot;:&quot;2016-01-01T10:30&quot;}
+</code></pre><p>如果更新失败，服务端需如下响应：</p><ol><li>相应的 4xx 或 5xx 状态码</li><li>通过响应体 body 返回失败的描述性信息，格式为纯文本，如：</li></ol><pre><code>404 Not Found
+
+用户不存在！
+</code></pre><h4><strong>2.3. 查询资源 (Read) - R/CRUD</strong></h4><p>查询资源有查询单个资源的信息和查询一批资源的信息，不管哪种，都是统一使用 GET 方法。</p><p>资源查询成功后服务端需如下响应：</p><ol><li>返回 &quot;200 OK&quot; 状态码</li><li>通过响应体 (body) 承载并返回资源的信息，格式统一使用 json 对象的字符串压缩格式 (无空格、换行和注解)</li></ol><p>请求范例：(查询单个资源)</p><pre><code>HTTP/1.1 GET /user/admin
+</code></pre><p>响应范例：(成功)</p><pre><code>200 OK
+
+{&quot;id&quot;:&quot;admin&quot;,&quot;name&quot;:&quot;管理员&quot;,&quot;sex&quot;:&quot;男&quot;}
+</code></pre><p>请求范例：(查询多个资源 - 分页查询)</p><pre><code>HTTP/1.1 GET /user?page-no=1
+</code></pre><p>响应范例：(成功)</p><pre><code>200 OK
+
+{
+  &quot;rows&quot;: [
+    {&quot;id&quot;:&quot;admin&quot;,&quot;name&quot;:&quot;管理员&quot;},
+    {&quot;id&quot;:&quot;rj&quot;,&quot;name&quot;:&quot;测试员&quot;},
+    ...
+  ],
+  &quot;count&quot;: 1000
+}
+注：响应已作格式化显示，实际应为压缩格式
+</code></pre><p>请求范例：(查询多个资源 - 非分页查询)</p><pre><code>HTTP/1.1 GET /user
+</code></pre><p>响应范例：(成功)</p><pre><code>200 OK
+
+[
+  {&quot;id&quot;:&quot;admin&quot;,&quot;name&quot;:&quot;管理员&quot;},
+  {&quot;id&quot;:&quot;rj&quot;,&quot;name&quot;:&quot;测试员&quot;},
+  ...
+]
+注：响应已作格式化显示，实际应为压缩格式
+</code></pre><p>如果查询失败，服务端需如下响应：</p><ol><li>相应的 4xx 或 5xx 状态码</li><li>通过响应体 body 返回失败的描述性信息，格式为纯文本，如：</li></ol><pre><code>401 Unauthorized
+
+请先登陆！
+</code></pre><h4><strong>2.4. 删除资源 (Delete) - D/CRUD</strong></h4><p>删除资源使用 DELETE 方法。删除成功后服务端响应返回状态码 &quot;204 No Content&quot; 即可。</p><p>请求范例：(删除单个资源)</p><pre><code>HTTP/1.1 DELETE /user/admin
+</code></pre><p>请求范例：(删除多个资源)</p><pre><code>HTTP/1.1 DELETE /user/admin,rj
+</code></pre><p>响应范例：(成功)</p><pre><code>204 No Content
+</code></pre><p>如果删除失败，服务端需如下响应：</p><ol><li>相应的 4xx 或 5xx 状态码</li><li>通过响应体 body 返回失败的描述性信息，格式为纯文本，如：</li></ol><pre><code>403 Forbidden
+
+请先登陆！
+</code></pre><h2><strong>附注</strong></h2><h3><strong>HTTP 方法的幂等性和安全性</strong></h3><p>要设计统一的 REST 接口，必须真正理解 HTTP 方法的幂等性和安全性。</p><p>幂等性 (idempotence) 是指外系统对同一 REST 接口的多次访问，得到相同状态的资源。</p><p>安全性 (safty) 代表安全的 REST 接口，是指外系统对该接口的访问，不会改变服务端资源的状态。</p><table><thead><tr><th>方法</th><th>幂等</th><th>安全</th></tr></thead><tbody><tr><td>GET</td><td>是</td><td>是</td></tr><tr><td>DELETE</td><td>是</td><td>否</td></tr><tr><td>POST</td><td>否</td><td>否</td></tr><tr><td>PUT</td><td>是</td><td>否</td></tr><tr><td>PATCH</td><td>否</td><td>否</td></tr></tbody></table><p>注：</p><ul><li>PUT 被定义为幂等而 POST 则不是，这是一个很重要的区别</li><li>PATCH 没有纳入 JAX-RS 2.0 标准</li></ul><h3><strong>HTTP 常用状态码</strong></h3><table><thead><tr><th>状态码</th><th>含义</th></tr></thead><tbody><tr><td><strong>2xx</strong></td><td><strong>成功</strong></td></tr><tr><td>200 OK</td><td>服务器正常响应</td></tr><tr><td>201 Created</td><td>创建新实体</td></tr><tr><td>202 Accepted</td><td>服务器已接受请求，处理尚未完成。可用于异步处理机制</td></tr><tr><td>204 No Content</td><td>服务器正常响应，但响应实体为空</td></tr><tr><td><strong>3xx</strong></td><td><strong>重定向</strong></td></tr><tr><td>301 Moved Permanently</td><td>请求资源的地址已永久移动到新位置，响应头 Location 指定新的位置</td></tr><tr><td>302 Found</td><td>请求资源的地址发生临时变动，响应头 Location 指定新的临时位置</td></tr><tr><td>304 Not Modified</td><td>客户端缓存资源依然有效</td></tr><tr><td><strong>4xx</strong></td><td><strong>客户端错误</strong></td></tr><tr><td>400 Bad Request</td><td>请求信息出现语法错误</td></tr><tr><td>401 Unauthorized</td><td>请求资源无法授权给未验证用户</td></tr><tr><td>403 Forbidden</td><td>请求资源未授权当前用户</td></tr><tr><td>404 Not Found</td><td>请求资源不逊在</td></tr><tr><td>405 Method Not Allowed</td><td>请求方法不匹配</td></tr><tr><td>406 Not Acceptable</td><td>请求资源的媒体类型不匹配</td></tr><tr><td><strong>5xx</strong></td><td><strong>服务器错误</strong></td></tr><tr><td>500 Internal Server Error</td><td>服务器内部错误，意外终止响应</td></tr><tr><td>501 Not Implemented</td><td>服务器不支持当前请求</td></tr><tr><td>502 Bad Gateway</td><td>网关或代理执行请求时，从上游服务器接收到无效响应</td></tr><tr><td>503 Service Unavailable</td><td>服务器当前无法处理请求</td></tr></tbody></table><h2><strong>参考</strong></h2><ul><li>PUT 还是 POST ? <a href=https://www.oschina.net/translate/put-or-post>中</a>、<a href=https://stormpath.com/blog/put-or-post>英</a></li><li><a href=https://dzone.com/articles/transparent-patch-support-jax>Transparent PATCH Support in JAX-RS 2.0</a></li></ul>
