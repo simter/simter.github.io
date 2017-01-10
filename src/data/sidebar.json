@@ -9,62 +9,72 @@
   },
   {
     "id": "rest-rule",
-    "label": "REST 接口设计规范"
+    "label": "REST 规范"
   },
   {
     "id": "unit-test-rule",
     "label": "单元测试"
   },
   {
-    "id": "subA",
-    "label": "子菜单A",
+    "id": "tech-base",
+    "label": "技术基础",
     "children": [
       {
-        "id": "subA1",
-        "label": "子菜单A1"
-      }
-    ]
-  },
-  {
-    "id": "subB",
-    "label": "子菜单B",
-    "children": [
-      {
-        "id": "subB1",
-        "label": "子菜单B1"
-      },
-      {
-        "id": "subB2",
-        "label": "子菜单B2"
-      }
-    ]
-  },
-  {
-    "id": "test-menu",
-    "label": "菜单测试",
-    "children": [
-      {
-        "id": "sub1",
-        "label": "子菜单1"
-      },
-      {
-        "id": "sub2",
-        "label": "子菜单2",
+        "id": "js",
+        "label": "JavaScript",
         "children": [
           {
-            "id": "sub21",
-            "label": "3级菜单1"
+            "id": "es-feature",
+            "label": "ES 特征收集"
           },
           {
-            "id": "sub22",
-            "label": "3级菜单2"
+            "id": "json",
+            "label": "JSON"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "level-a",
+    "label": "一级菜单A",
+    "children": [
+      {
+        "id": "level-a-1",
+        "label": "二级菜单A1"
+      },
+      {
+        "id": "level-a-1",
+        "label": "二级菜单A2"
+      }
+    ]
+  },
+  {
+    "id": "level-b",
+    "label": "一级菜单B",
+    "children": [
+      {
+        "id": "level-b-1",
+        "label": "二级菜单B1"
+      },
+      {
+        "id": "level-b-2",
+        "label": "二级菜单B2",
+        "children": [
+          {
+            "id": "level-b-2-1",
+            "label": "三级菜单B1"
+          },
+          {
+            "id": "level-b-2-2",
+            "label": "三级菜单B2"
           }
         ]
       },
       {
-        "id": "sub3",
-        "label": "子菜单3"
-      }
+        "id": "level-b-3",
+        "label": "二级菜单B3"
+      },
     ]
   }
 ]
