@@ -10,8 +10,8 @@
 
 <body>
   <app-layout id='app'>
-    <app-tree slot="sidebar" :nodes='sidebarItems' @node-activated='sidebarItemActivated'></app-tree>
-    <div slot="main" v-html='mainContent' id='main'></div>
+    <app-tree slot="sidebar" :nodes='sidebarItems' @node-activated='forwardToChapter'></app-tree>
+    <div slot="main" v-html='mainContent'></div>
   </app-layout>
 
   <!-- https://github.com/blog/273-github-ribbons -->
