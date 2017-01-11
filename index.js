@@ -173,7 +173,12 @@ var sidebarItems = [
       {
         "id": "level-b-3",
         "label": "二级菜单B3"
-      } ]
+      }
+    ]
+  },
+  {
+    "id": "hosts",
+    "label": "Hosts"
   }
 ];
 
