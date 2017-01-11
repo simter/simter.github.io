@@ -1,22 +1,94 @@
-<h1>ES 特征收集</h1><h2>概述</h2><p>ECMAScript 是由国际标准化组织 <a href="http://www.ecma-international.org/">ECMA</a> 通过 <a href=http://www.ecma-international.org/publications/standards/Ecma-262.htm>ECMA-262</a> 标准化的脚本程序设计语言，以下简称 ES。</p><p>ECMAScript 只用来标准化 JavaScript 这种语言的基本语法结构，与部署环境相关的标准都由其他标准规定，比如 DOM 的标准就是由 W3C 组织（World Wide Web Consortium）制定的。</p><p>ECMA-262 标准后来也被另一个国际标准化组织 ISO (International Organization for Standardization) 批准，标准号是 <a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO-16262</a>。</p><p>1996 年 11 月，网景公司将 JavaScript 提交给欧洲计算机制造商协会 (现在的 ECMA 组织) 进行标准化。ECMA-262 的第一个版本于 1997 年 6 月被 <a href="http://www.ecma-international.org/">ECMA</a> 组织采纳。</p><p>2015 年，负责制定 ECMAScript 规范草案的委员会 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 将定义新标准的制度改为一年一次，每个新特性一旦被批准就可以添加，不像以往，规范只有在整个草案完成，所有特性都没问题后才能被定稿。标准在每年的 6 月份正式发布一次，作为当年的正式版本。接下来的时间，就在这个版本的基础上做改动，直到下一年的 6 月份，草案变成新一年的版本。从 ES2015 开始，版本不再延用 x.y 格式，改用年份标记，如 ECMAScript 2015 (ES2015)、ECMAScript 2016 (ES2016)。</p><p>注：<a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> Technical Committee 39 <a href="http://www.ecma-international.org/">ECMA</a> 的第 39 号技术专家委员会，负责制订 ECMAScript 标准，成员包括 Microsoft、Mozilla、Google 等大公司。</p><h2>JavaScript 与 ECMAScript 的关系</h2><p>ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现。在日常场合，这两个词是可以互换的。另外 JavaScript 是 Netscape 的注册商标。</p><p>除了 ECMAScript 的版本，很长一段时间中，Netscape 公司（以及继承它的 Mozilla 基金会）在内部依然使用自己的版本号。这导致了 JavaScript 有自己不同于 ECMAScript 的版本号。1996年3月，Navigator 2.0 内置了 JavaScript 1.0。JavaScript 1.1 版对应 ECMAScript 1.0，但是直到 JavaScript 1.4版才完全兼容 ECMAScript 1.0。JavaScript 1.5 版完全兼容 ECMAScript 3.0。目前的 JavaScript 1.8 版完全兼容 ECMAScript 5。</p><h2>ES 版本历史</h2><table><thead><tr><th style=text-align:center>版本</th><th style=text-align:center>发表日期</th><th style=text-align:left>名称</th><th style=text-align:left>备注</th></tr></thead><tbody><tr><td style=text-align:center>7.0</td><td style=text-align:center>2016-06</td><td style=text-align:left>ES2016</td><td style=text-align:left>仅小幅修订，只新增指数操作符和 Array.prototype.includes</td></tr><tr><td style=text-align:center>6.0</td><td style=text-align:center>2015-06</td><td style=text-align:left>ES2015, ES6</td><td style=text-align:left>Promise、fetch、class、箭头函数、generator/yield/iterator、尾递归优化&lt;br&gt;草案于 2013-12 发布</td></tr><tr><td style=text-align:center>5.1</td><td style=text-align:center>2011-06</td><td style=text-align:left>ES5.1</td><td style=text-align:left>成为 ISO 国际标准 (ISO/IEC 16262:2011)</td></tr><tr><td style=text-align:center>5.0</td><td style=text-align:center>2009-12</td><td style=text-align:left>ES5</td><td style=text-align:left>严格模式、JSON、bind、get/set、now、trim ...&lt;br&gt;与 ES3 基本保持兼容，所有现代浏览器都相当完全的实现了</td></tr><tr><td style=text-align:center>3.1</td><td style=text-align:center>2008-07</td><td style=text-align:left>ES3.1</td><td style=text-align:left>将 4.0 中涉及现有功能改善的一小部分，发布为 ECMAScript 3.1</td></tr><tr><td style=text-align:center>4.0</td><td style=text-align:center>放弃</td><td style=text-align:left></td><td style=text-align:left>因太激进于 2008-07 被 ECMA 抛弃&lt;br&gt;ActionScript 3 是该版的唯一实现 (Flash 差点就...)&lt;br&gt;草案于 2007-10 发布</td></tr><tr><td style=text-align:center>3.0</td><td style=text-align:center>1999-12</td><td style=text-align:left></td><td style=text-align:left>正则表达式、异常 ...</td></tr><tr><td style=text-align:center>2.0</td><td style=text-align:center>1998-06</td><td style=text-align:left></td><td style=text-align:left>ISO/IEC16262 ...</td></tr><tr><td style=text-align:center>1.0</td><td style=text-align:center>1997-06</td><td style=text-align:left></td><td style=text-align:left>首版</td></tr></tbody></table><p>关注点：</p><ul><li><a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 判断 ES5 会在 2013 年的年中成为 JavaScript 开发的主流标准，并在此后五年中一直保持这个位置</li><li>ES2016 由于变动非常小（只新增了数组实例的 includes 方法和指数运算符），因此 ES2016 与 ES2015 基本上是同一个标准，都被看作是 ES6。</li><li>3.0 版是一个巨大的成功，在业界得到广泛支持，成为通行标准，奠定了 JavaScript 语言的基本语法，以后的版本完全继承。直到今天，初学者一开始学习 JavaScript，其实就是在学 3.0 版的语法。</li></ul><h2>ES 提案批准流程</h2><p>针对 ECMAScript 特性的每一个提议都需要经历以下 5 阶段，从阶段 0 开始，从一个阶段递交到下一个阶段必须要得到 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 的全员同意：</p><ul><li>Stage 0 - Strawman 稻草人</li><li>Stage 1 - Proposal 提议</li><li>Stage 2 - Draft 草案</li><li>Stage 3 - Candidate 候选</li><li>Stage 4 - Finished 完成</li></ul><p>一个提案只要能进入 Stage 2，就差不多等于肯定会包括在以后的正式标准里面。ECMAScript 当前的所有提案，可以在 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 的官方网站 <a href=https://github.com/tc39/ecma262>https://github.com/tc39/ecma262</a> 查看。</p><p>一个特征进入阶段 4，我们才可以称其为 ES20XX 特性。</p><h2>ES 浏览器支持情况</h2><ul><li>各大浏览器对 ES2016 的支持 <a href="http://kangax.github.io/compat-table/es2016plus/">http://kangax.github.io/compat-table/es2016plus/</a></li><li>各大浏览器对 ES2015 (ES6) 的支持 <a href=https://kangax.github.io/es5-compat-table/es6>https://kangax.github.io/es5-compat-table/es6</a></li><li>各大浏览器对 ES5 的支持 <a href=https://kangax.github.io/es5-compat-table/es5>https://kangax.github.io/es5-compat-table/es5</a></li></ul><h2>ES 标准规范</h2><p>最新的 ECMAScript 标准规范全在这个官方 pdf 文件内了，点击 <a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>这里</a> 下载。</p><h2>ES 关键特征说明</h2><h3>严格模式</h3><h3>作用域</h3><p>var、let、const 声明变量。</p><h3>JSON 操作</h3><h3>字符串模板</h3><h3>箭头函数</h3><p>箭头函数可以使代码变得简洁，参数只有一个时可以省略 <code>()</code>，函数体只有一句话可以省略 <code>{}</code>，如果返回值是一个表达式还甚至还可以省略 <code>return</code>。</p><pre><code class=language-js>// 未使用箭头函数
+<h1>ES 特征收集</h1><h2>概述</h2><p>ECMAScript 是由国际标准化组织 <a href="http://www.ecma-international.org/">ECMA</a> 通过 <a href=http://www.ecma-international.org/publications/standards/Ecma-262.htm>ECMA-262</a> 标准化的脚本程序设计语言，以下简称 ES。</p><p>ECMAScript 只用来标准化 JavaScript 这种语言的基本语法结构，与部署环境相关的标准都由其他标准规定，比如 DOM 的标准就是由 W3C 组织（World Wide Web Consortium）制定的。</p><p>ECMA-262 标准后来也被另一个国际标准化组织 ISO (International Organization for Standardization) 批准，标准号是 <a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO-16262</a>。</p><p>1996 年 11 月，网景公司将 JavaScript 提交给欧洲计算机制造商协会 (现在的 ECMA 组织) 进行标准化。ECMA-262 的第一个版本于 1997 年 6 月被 <a href="http://www.ecma-international.org/">ECMA</a> 组织采纳。</p><p>2015 年，负责制定 ECMAScript 规范草案的委员会 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 将定义新标准的制度改为一年一次，每个新特性一旦被批准就可以添加，不像以往，规范只有在整个草案完成，所有特性都没问题后才能被定稿。标准在每年的 6 月份正式发布一次，作为当年的正式版本。接下来的时间，就在这个版本的基础上做改动，直到下一年的 6 月份，草案变成新一年的版本。从 ES2015 开始，版本不再延用 x.y 格式，改用年份标记，如 ECMAScript 2015 (ES2015)、ECMAScript 2016 (ES2016)。</p><p>注：<a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> Technical Committee 39 <a href="http://www.ecma-international.org/">ECMA</a> 的第 39 号技术专家委员会，负责制订 ECMAScript 标准，成员包括 Microsoft、Mozilla、Google 等大公司。</p><h2>JavaScript 与 ECMAScript 的关系</h2><p>ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现。在日常场合，这两个词是可以互换的。另外 JavaScript 是 Netscape 的注册商标。</p><p>除了 ECMAScript 的版本，很长一段时间中，Netscape 公司（以及继承它的 Mozilla 基金会）在内部依然使用自己的版本号。这导致了 JavaScript 有自己不同于 ECMAScript 的版本号。1996年3月，Navigator 2.0 内置了 JavaScript 1.0。JavaScript 1.1 版对应 ECMAScript 1.0，但是直到 JavaScript 1.4版才完全兼容 ECMAScript 1.0。JavaScript 1.5 版完全兼容 ECMAScript 3.0。目前的 JavaScript 1.8 版完全兼容 ECMAScript 5。</p><h2>ES 版本历史</h2><table><thead><tr><th style=text-align:center>版本</th><th style=text-align:center>发表日期</th><th style=text-align:left>名称</th><th style=text-align:left>备注</th></tr></thead><tbody><tr><td style=text-align:center>7.0</td><td style=text-align:center>2016-06</td><td style=text-align:left>ES2016</td><td style=text-align:left>仅小幅修订，只新增指数操作符和 Array.prototype.includes</td></tr><tr><td style=text-align:center>6.0</td><td style=text-align:center>2015-06</td><td style=text-align:left>ES2015, ES6</td><td style=text-align:left>Promise、fetch、class、箭头函数、generator/yield/iterator、尾递归优化&lt;br&gt;草案于 2013-12 发布</td></tr><tr><td style=text-align:center>5.1</td><td style=text-align:center>2011-06</td><td style=text-align:left>ES5.1</td><td style=text-align:left>成为 ISO 国际标准 (ISO/IEC 16262:2011)</td></tr><tr><td style=text-align:center>5.0</td><td style=text-align:center>2009-12</td><td style=text-align:left>ES5</td><td style=text-align:left>严格模式、JSON、bind、get/set、now、trim ...&lt;br&gt;与 ES3 基本保持兼容，所有现代浏览器都相当完全的实现了</td></tr><tr><td style=text-align:center>3.1</td><td style=text-align:center>2008-07</td><td style=text-align:left>ES3.1</td><td style=text-align:left>将 4.0 中涉及现有功能改善的一小部分，发布为 ECMAScript 3.1</td></tr><tr><td style=text-align:center>4.0</td><td style=text-align:center>放弃</td><td style=text-align:left></td><td style=text-align:left>因太激进于 2008-07 被 ECMA 抛弃&lt;br&gt;ActionScript 3 是该版的唯一实现 (Flash 差点就...)&lt;br&gt;草案于 2007-10 发布</td></tr><tr><td style=text-align:center>3.0</td><td style=text-align:center>1999-12</td><td style=text-align:left></td><td style=text-align:left>正则表达式、异常 ...</td></tr><tr><td style=text-align:center>2.0</td><td style=text-align:center>1998-06</td><td style=text-align:left></td><td style=text-align:left>ISO/IEC16262 ...</td></tr><tr><td style=text-align:center>1.0</td><td style=text-align:center>1997-06</td><td style=text-align:left></td><td style=text-align:left>首版</td></tr></tbody></table><p>关注点：</p><ul><li><a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 判断 ES5 会在 2013 年的年中成为 JavaScript 开发的主流标准，并在此后五年中一直保持这个位置</li><li>ES2016 由于变动非常小（只新增了数组实例的 includes 方法和指数运算符），因此 ES2016 与 ES2015 基本上是同一个标准，都被看作是 ES6。</li><li>3.0 版是一个巨大的成功，在业界得到广泛支持，成为通行标准，奠定了 JavaScript 语言的基本语法，以后的版本完全继承。直到今天，初学者一开始学习 JavaScript，其实就是在学 3.0 版的语法。</li></ul><h2>ES 提案批准流程</h2><p>针对 ECMAScript 特性的每一个提议都需要经历以下 5 阶段，从阶段 0 开始，从一个阶段递交到下一个阶段必须要得到 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 的全员同意：</p><ul><li>Stage 0 - Strawman 稻草人</li><li>Stage 1 - Proposal 提议</li><li>Stage 2 - Draft 草案</li><li>Stage 3 - Candidate 候选</li><li>Stage 4 - Finished 完成</li></ul><p>一个提案只要能进入 Stage 2，就差不多等于肯定会包括在以后的正式标准里面。ECMAScript 当前的所有提案，可以在 <a href=http://www.ecma-international.org/memento/TC39.htm>TC39</a> 的官方网站 <a href=https://github.com/tc39/ecma262>https://github.com/tc39/ecma262</a> 查看。</p><p>一个特征进入阶段 4，我们才可以称其为 ES20XX 特性。</p><h2>ES 浏览器支持情况</h2><ul><li>各大浏览器对 ES2016 的支持 <a href="http://kangax.github.io/compat-table/es2016plus/">http://kangax.github.io/compat-table/es2016plus/</a></li><li>各大浏览器对 ES2015 (ES6) 的支持 <a href=https://kangax.github.io/es5-compat-table/es6>https://kangax.github.io/es5-compat-table/es6</a></li><li>各大浏览器对 ES5 的支持 <a href=https://kangax.github.io/es5-compat-table/es5>https://kangax.github.io/es5-compat-table/es5</a></li></ul><h2>ES 标准规范</h2><p>最新的 ECMAScript 标准规范全在这个官方 pdf 文件内了，点击 <a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>这里</a> 下载。</p><h2>ES 关键特征说明</h2><h3>严格模式</h3><p>在 ECMAscript 5 中新增了 &quot;严格模式&quot; (<a href=https://developer.mozilla.org/zh-CN/docs/JavaScript/Strict_mode>strict mode</a>)，这种模式使得 Javascript 在更严格的条件下运行。</p><p>严格模式可以应用到整个 script 标签或个别函数中。</p><p>为整个 script 标签开启严格模式:</p><pre><code>&lt;script&gt;
+  &quot;use strict&quot;;
+  ...// other code
+&lt;/script&gt;
+
+// or script file: /path/to/my.js
+&quot;use strict&quot;;
+...// other code
+</code></pre><p>为个别函数开启严格模式:</p><pre><code class=language-js>function strictFn(){
+  'use strict';
+  ...// other code
+}
+</code></pre><p>在严格模式下：</p><ul><li>全局变量必须显式声明</li><li>函数必须声明在顶层，即不允许在非函数的代码块内声明函数。</li><li>禁止使用 with</li><li>禁止删除变量</li><li>禁止 this 关键字指向全局对象</li><li>更多请移步 <a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode>这里</a></li></ul><h3>作用域</h3><p>var、let、const 声明变量。</p><h3>JSON 操作</h3><p>序列化 JSON.<a href=https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify>stringify</a>(value[, replacer[, space]])</p><pre><code class=language-js>JSON.stringify({})                   // '{}'
+JSON.stringify(true)                 // 'true'
+JSON.stringify('foo')                // '&quot;foo&quot;'
+JSON.stringify([1, 'false', false])  // '[1,&quot;false&quot;,false]'
+JSON.stringify({ x: 5 })             // '{&quot;x&quot;:5}'
+JSON.stringify({ x: null })          // &quot;{&quot;x&quot;:null}&quot;
+JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)) // '&quot;2006-01-02T15:04:05.000Z&quot;'
+JSON.stringify({ x: undefined, y: Object, z: Symbol('') }) // '{}'
+JSON.stringify({ x: [
+  10, undefined, function(){}, Symbol('')
+] }) // '{&quot;x&quot;:[10,null,null,null]}' 
+
+// with replacer function
+JSON.stringify({x: &quot;x&quot;, n: 1}, (key, value) =&gt;
+  typeof value === 'string' ? undefined : value
+) // '{&quot;n&quot;:1}'
+
+// with replacer array
+JSON.stringify({x: &quot;x&quot;, y: &quot;y&quot;, n: 1}, ['x', 'n']) // '{&quot;x&quot;:&quot;x&quot;,&quot;n&quot;:1}'
+
+// toJSON() behavior
+var obj = {
+  foo: 'foo',
+  toJSON: function() {return 'bar'}
+};
+JSON.stringify(obj) // '&quot;bar&quot;'
+</code></pre><p>反序列化 JSON.<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse>parse</a>(text[, reviver])</p><pre><code class=language-js>JSON.parse('{}');              // {}
+JSON.parse('true');            // true
+JSON.parse('&quot;foo&quot;');           // &quot;foo&quot;
+JSON.parse('[1, 5, &quot;false&quot;]'); // [1, 5, &quot;false&quot;]
+JSON.parse('null');            // null
+JSON.parse('{&quot;p&quot;: 5}', (key, value) =&gt;
+  typeof value === 'number' ? value * 2 : value
+) // { p: 10 }
+</code></pre><p>注：JSON.parse() 不允许 trailing commas：</p><pre><code class=language-js>// both will throw a SyntaxError
+JSON.parse('[1, 2, 3, 4, ]');
+JSON.parse('{&quot;foo&quot; : 1, }');
+</code></pre><h3>模板字符串</h3><p>模板字符串 (template string) 是增强版的字符串，用反引号 (`)标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。</p><p>嵌入变量、表达式、函数：(写在 ${} 內)</p><pre><code class=language-js>let name = &quot;world&quot;
+let tpl = `Hello ${name}` // Hello world
+
+let user = {name: &quot;world&quot;}
+tpl = `Hello ${user.name}` // Hello world
+
+// 大括号内可以是任意 JavaScript 表达式，可以进行运算，以及引用对象属性
+let x = 1;
+let y = 2;
+`${x} + ${y} = ${x + y}` // &quot;1 + 2 = 3&quot;
+
+// 也可调用函数
+function fn() {return &quot;Hello World&quot;}
+`${fn()}` // Hello World
+
+// 复杂点的嵌套+函数
+let array = [1, 2, ...]
+let tpl = `${array.map(item =&gt; `${item}`).join('')}`
+</code></pre><p>如果需要使用反引号，用反斜杠 \ 转义：</p><pre><code class=language-js>let tpl = `Hello \`world\`` // Hello `world`
+</code></pre><p>多行模板字符串，所有的空格、换行符和缩进都会保留：</p><pre><code class=language-js>let tpl = `&lt;ul&gt;
+  &lt;li&gt;first&lt;/li&gt;
+  &lt;li&gt;second&lt;/li&gt;
+&lt;/ul&gt;`
+</code></pre><p>更复杂的标签模板请移步 <a href=http://es6.ruanyifeng.com/#docs/string#%E6%A0%87%E7%AD%BE%E6%A8%A1%E6%9D%BF>这里</a>。</p><h3>箭头函数</h3><p>箭头函数可以使代码变得简洁，参数只有一个时可以省略 <code>()</code>，函数体只有一句话可以省略 <code>{}</code>，如果返回值是一个表达式还可以省略 <code>return</code>。</p><pre><code class=language-js>// 未使用箭头函数
 var myFn = function (arg1) {
   return x;
 }
 
 // 使用箭头函数
 var myFn = (arg1) =&gt; {
-  return arg1;
+  return arg1 + 'ok';
 }
 
 // 或者
-var myFn = arg1 =&gt; arg1;
-</code></pre><p>箭头函数内 this 于使用 function 定义函数内的 this 是两个完全不同的东西，这个要切记、切记、切记。</p><h3>Promise</h3><p>不要将 Promise 与异步编程代码的简化等同，如解决异步的回调地狱问题，那只是 Promise 的其中一个使用场景而已。要用承诺模式的概念去理解 Promise，当承诺得到实现时，我们可以通过 then 函数（第一个函数参数）获取承诺的结果，而当承诺被打破、拒绝而无法实现时，我们可以通过 catch (或者 then 的第二个函数参数) 获取承诺无法实现的理由。</p><p>该新特性属于 ECMAScript 2015（ES6）规范。</p><p>创建 Promise 实例的标准方法：</p><pre><code class=language-js>// 创建实例
+var myFn = arg1 =&gt; arg1 + 'ok';
+</code></pre><p>箭头函数内 this 与使用 function 定义函数内的 this 是两个完全不同的东西，这个要切记、切记、切记。</p><h3>Promise</h3><p>不要将 Promise 与异步编程代码的简化等同，如解决异步的回调地狱问题，那只是 Promise 的其中一个使用场景而已。要用承诺模式的概念去理解 Promise，当承诺得到实现时，我们可以通过 then 函数（第一个函数参数）获取承诺的结果，而当承诺被打破、拒绝而无法实现时，我们可以通过 catch (或者 then 的第二个函数参数) 获取承诺无法实现的理由。</p><p>该新特性属于 ECMAScript 2015（ES6）规范。</p><p>创建 Promise 实例的标准方法：</p><pre><code class=language-js>// 创建实例
 let promise = new Promise(function(resolve, reject)){
   ...//任何同步或异步的代码
 
   if (成功) {
     // 当承诺得到实现时，返回一些有用的东西，如 someThing
-    resolve(someThing) // 状态转为 Resolved，又叫 Fulfilled
+    resolve(someThing) // 状态转为 fulfilled，又叫 resolved
   } else { // 失败
   ...
     // 当承诺无法实现时，返回理由，如 someError
@@ -42,11 +114,11 @@ promise.then(someThing =&gt; {
   // 处理承诺无法实现所返回的理由
   ...
 })
-</code></pre><p>创建 Promise 实例的其它方法：</p><pre><code class=language-js>// 将任意对象转为 Resolved 状态的 Promise 对象：
+</code></pre><p>创建 Promise 实例的其它方法：</p><pre><code class=language-js>// 将任意对象转为 fulfilled 状态的 Promise 对象：
 // 1) 如果参数本身是 Promise 实例，会原封不动返回之
 // 2) 如果参数是一个 thenable 对象 (有 then 方法的对象)，会将这个对象转为 Promise 对象，然后立即执行其 then 方法
-// 3) 参数不是具有 then 方法的对象，或根本就不是对象，会返回一个新的 Promise 对象，状态为 Resolved
-// 4) 不带任何参数，直接返回一个 Resolved 状态的 Promise 对象
+// 3) 参数不是具有 then 方法的对象，或根本就不是对象，会返回一个新的 Promise 对象，状态为 fulfilled
+// 4) 不带任何参数，直接返回一个 fulfilled 状态的 Promise 对象
 let p = Promise.resolve(someThing)
 
 // 将任意对象转为 Rejected 状态的 Promise 对象。
@@ -69,4 +141,86 @@ let p = Promise.all([promise1, promise2, ...])
 // 率先改变的 promiseN 的返回值，传递给 p 的回调函数。
 // 注：Promise.race 方法的参数的要求与 Promise.all 的相同。
 let p = Promise.race([promise1, promise2, ...])
-</code></pre><p>Promise 特点总结：</p><ul><li>状态不受外界影响，且一旦状态改变，就不会再变<blockquote><p>状态只有两种变化的可能：从 Pending 变为 Resolved 或从 Pending 变为 Rejected。 任何时候都可已继续给 Promise 实例附加 then 回调，总会得到结果，永不落空，不像 事件监听机制，必须在触发之前去监听，事件触发之后再去监听是得不到结果的。</p></blockquote></li><li>无法中途取消和得知状态的进展过程<blockquote><p>一旦实例化，它就会立即执行，无法中途取消，当处于 Pending 状态时，无法得知目前 进展到哪一个阶段（刚刚开始还是即将完成）。</p></blockquote></li><li>then、catch 内可以继续返回 Promise 实例或任何其它值，返回值将作为下一个 then 函数的参数向下继续传递</li><li>catch 方法 是 .then(null, rejectHandler) 的语法糖，但并不总是相同<blockquote><p>建议总是使用 catch 方法，而不使用 then 方法的第二个参数。<br>当使用 then(resolveHandler, rejectHandler) 时，rejectHandler 不会捕获在 resolveHandler 中抛出的错误。</p></blockquote></li><li>如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部<blockquote><p>上一个 then 内的异常，可以通过下一个 catch 来获取</p></blockquote></li></ul><p>更多请移步 <a href="https://promisesaplus.com/">Promises/A+ 规范</a>、<a href="https://www.promisejs.org/api/">Promises API Reference</a>。</p><h3>解构赋值</h3><h3>展开运算符</h3><h3>对象操作</h3><h3>数组操作</h3><h2>在线书籍</h2><ul><li><a href=http://es6.ruanyifeng.com>阮一峰: ECMAScript 6 入门</a></li><li><a href=http://exploringjs.com/es2016-es2017/index.html>Axel Rauschmayer: Exploring ES2016 and ES2017</a></li><li><a href=http://exploringjs.com/es6>Axel Rauschmayer: Exploring ES6</a></li></ul><h2>参考</h2><ul><li><a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>ECMA-262: ECMAScript Language Specification</a></li><li><a href=https://zh.wikipedia.org/wiki/ECMAScript>维基百科 ECMAScript</a></li><li><a href=https://huangxuan.me/2015/09/22/js-version>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？</a></li><li><a href=http://wwsun.github.io/posts/new-in-es2016.html>ES 新特性及 ECMAScript 标准的制定流程</a></li><li><a href=http://javascript.ruanyifeng.com/introduction/history.html>JavaScript 语言的历史</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO/IEC 16262:2011</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=33835">ISO/IEC 16262:2002</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=29696">ISO/IEC 16262:1998</a></li><li><a href=https://gold.xitu.io/post/584f9ef7128fe100692e67e2>ES5 新增特性汇总</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTE2NTE1Ng==&amp;mid=2649515779&amp;idx=1&amp;sn=a09ec43ee49f2c210ab3132d8463498d">ES6 箭头函数使用禁忌</a></li><li><a href="http://coderlt.coding.me/2016/12/03/promise-in-depth-an-introduction-1/">深入理解 Promise (上)</a></li><li><a href="http://efe.baidu.com/blog/promises-anti-pattern/">谈谈使用 Promise 时的一些反模式</a></li></ul>
+</code></pre><p>Promise 特点总结：</p><ul><li>状态不受外界影响，且一旦状态改变，就不会再变<blockquote><p>状态只有两种变化的可能：从 pending 变为 fulfilled 或从 pending 变为 rejected 任何时候都可已继续给 Promise 实例附加 then 回调，总会得到结果，永不落空，不像 事件监听机制，必须在触发之前去监听，事件触发之后再去监听是得不到结果的。</p></blockquote></li><li>无法中途取消和得知状态的进展过程<blockquote><p>一旦实例化，它就会立即执行，无法中途取消，当处于 pending 状态时，无法得知目前 进展到哪一个阶段（刚刚开始还是即将完成）。</p></blockquote></li><li>then、catch 内可以继续返回 Promise 实例或任何其它值，返回值将作为下一个 then 函数的参数向下继续传递</li><li>catch 方法是等价于 .then(null, onRejected) 的语法糖<blockquote><p>建议总是使用 catch 方法，而不使用 then 方法的第二个参数。<br>当使用 then(onFulfilled, onRejected) 时，onRejected 不会捕获在 onFulfilled 中抛出的错误。</p></blockquote></li><li>如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部<blockquote><p>上一个 then 内的异常，可以通过下一个 catch 来获取</p></blockquote></li></ul><p>更多请移步 <a href="https://promisesaplus.com/">Promises/A+ 规范</a>、<a href="https://www.promisejs.org/api/">Promises API Reference</a>。</p><h3><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>解构赋值 Destructuring</a></h3><h4>变量的解构赋值</h4><p>ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构。如果解构不成功，变量的值就等于 undefined。 解构时可以指定默认值，默认值生效的条件是，对象属性值或数组对应值严格等于 undefined (===)。</p><pre><code class=language-js>// 从数组解构赋值
+var [a, b] = [1, 2]          // a=1, b=2
+let [a, b] = [1]             // a=1, b=undefined
+const [a, b] = [1, 2, 3]     // a=1, b=2
+let [a, b = a] = [1];        // a=1, b=1
+
+// 指定默认值: 内部使用 === 判断是否有值
+var [a, b = '2'] = [1, , undefined] // a=1, b=2
+
+// 只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值，解构赋值会依次从这个接口获取值
+let [a, b] = new Set([1, 2, 3]) // a=1, b=2
+
+// 从对象结构：变量与属性同名
+var {a, b} = {b: 2, a: 1}       // a=1, b=2
+
+// 从对象结构：变量与属性不同名
+// 对象解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量，
+// 真正被赋值的是后者，而不是前者(模式)，故 x 是未定义变量
+var {a, x: b} = {x: 2, a: 1} // a=1, b=2, x is not defined
+
+// 先定义后解构
+let a;
+({a} = {a: 1}); // 圆括号是必须的，否则报错
+
+// 嵌套解构
+var [a, [b]] = [1, [2, 3]]    // a=1, b=2
+var {a, {b}} = {a: 1, {b: 2}} // a=1, b=2
+var {a, [b]} = {a: 1, [2, 3]} // a=1, b=2
+var {m: {a}} = {m: {a: 1}}    // a=1, m 只是模式不是变量不会被赋值
+
+// 复杂点的嵌套解构赋值
+let o = {};
+let a = [];
+({ foo: o.prop, bar: a[0] } = { foo: 1, bar: true });
+// obj={prop:1}, arr=[true]
+
+// 对数组进行对象属性的解构：数组本质是特殊的对象
+var arr = [1, 2, 3];
+let {0: a, [arr.length - 1] : b} = arr // a=1, b=3
+
+// 解构字符串
+const [a, b] = 'hello'       // a=&quot;h&quot;, b=&quot;e&quot;
+let {length : len} = 'hello' // len=5
+</code></pre><h4>函数参数的解构赋值</h4><pre><code class=language-js>function add([x, y]){return x + y}
+add([1, 2]); // 3
+
+function add({x = 0, y = arg =&gt; arg + 1}){return y(x)}
+add({x: 1}); // 2
+
+[[1, 2], [3, 4]].map(([a, b]) =&gt; a + b) // [ 3, 7 ]
+</code></pre><h3>展开运算符/剩余运算符</h3><p>用三个点号 <code>...</code>表示。</p><p>展开运算符又叫扩展运算符 (<a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator>spread operator</a>)，用于展开元素成多个元素。</p><p>剩余运算符 (<a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters>rest operator</a>) 则会收集多个元素压缩成一个数组元素。</p><p>语法：</p><pre><code class=language-js>// 用于函数调用: 剩余运算符 | rest 运算符 | 剩余参数
+myFunction(...iterableObj)
+myFunction(a, b, ...theRestArgs)
+
+// 用于数组字面量: 展开运算符
+[...iterableObj, 4, 5]
+</code></pre><p>范例：</p><pre><code class=language-js>var fn = function(a, b) {}
+var args = [1, 2]
+fn(args[0], args[1]) // 传统写法
+fn(...args)          // 使用扩展运算符
+
+// 合并数组
+var a1 = [2, 3]
+var a2 = [1, ...a1, 4] // [1, 2, 3, 4]
+
+// 向数组末尾追加另一数组的元素
+var a1 = [1, 2], a2 = [3, 4]
+a1.push(...a2) // a1=[1, 2, 3, 4]
+
+// 将类数组对象转换成数组
+var nodeList = document.querySelectorAll('div')
+var array = [...nodeList]
+
+// 字符串转数组
+let a = [...'abc'] // ['a', 'b', 'c']
+
+// 配合解构使用
+var [a, ...b] = [1, 2, 3] // a=1, b=[2, 3]
+
+// 简化函数参数定义
+var fn = function(...args) {return args.join('')}
+fn('a', 'b', 'c') // 'abc'
+</code></pre><h2>在线书籍</h2><ul><li><a href=http://liubin.org/promises-book>JavaScript Promise 迷你书（中文版）</a></li><li><a href=http://exploringjs.com/es2016-es2017/index.html>Axel Rauschmayer: Exploring ES2016 and ES2017</a></li><li><a href=http://exploringjs.com/es6>Axel Rauschmayer: Exploring ES6</a></li><li><a href=http://es6.ruanyifeng.com>阮一峰: ECMAScript 6 入门</a></li></ul><h2>参考</h2><ul><li><a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>ECMA-262: ECMAScript Language Specification</a></li><li><a href=https://zh.wikipedia.org/wiki/ECMAScript>维基百科 ECMAScript</a></li><li><a href=https://huangxuan.me/2015/09/22/js-version>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？</a></li><li><a href=http://wwsun.github.io/posts/new-in-es2016.html>ES 新特性及 ECMAScript 标准的制定流程</a></li><li><a href=http://javascript.ruanyifeng.com/introduction/history.html>JavaScript 语言的历史</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO/IEC 16262:2011</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=33835">ISO/IEC 16262:2002</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=29696">ISO/IEC 16262:1998</a></li><li><a href=https://gold.xitu.io/post/584f9ef7128fe100692e67e2>ES5 新增特性汇总</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTE2NTE1Ng==&amp;mid=2649515779&amp;idx=1&amp;sn=a09ec43ee49f2c210ab3132d8463498d">ES6 箭头函数使用禁忌</a></li><li><a href="http://coderlt.coding.me/2016/12/03/promise-in-depth-an-introduction-1/">深入理解 Promise (上)</a></li><li><a href="http://efe.baidu.com/blog/promises-anti-pattern/">谈谈使用 Promise 时的一些反模式</a></li></ul>
