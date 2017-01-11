@@ -108,7 +108,7 @@ var、let、const 声明变量。
 
 ### JSON 操作
 
-JSON.[stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)(value[, replacer[, space]])
+序列化 JSON.[stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)(value[, replacer[, space]])
 
 ```js
 JSON.stringify({})                   // '{}'
@@ -139,7 +139,7 @@ var obj = {
 JSON.stringify(obj) // '"bar"'
 ```
 
-JSON.[parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)(text[, reviver])
+反序列化 JSON.[parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)(text[, reviver])
 
 ```js
 JSON.parse('{}');              // {}
@@ -321,7 +321,70 @@ Promise 特点总结：
 
 更多请移步 [Promises/A+ 规范](https://promisesaplus.com/)、[Promises API Reference](https://www.promisejs.org/api/)。
 
-### 解构赋值
+### 解构赋值 Destructuring
+
+#### 变量的解构赋值
+
+ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构。如果解构不成功，变量的值就等于 undefined。
+解构时可以指定默认值，默认值生效的条件是，对象属性值或数组对应值严格等于 undefined (===)。
+
+```js
+// 从数组解构赋值
+var [a, b] = [1, 2]          // a=1, b=2
+let [a, b] = [1]             // a=1, b=undefined
+const [a, b] = [1, 2, 3]     // a=1, b=2
+let [a, b = a] = [1];        // a=1, b=1
+
+// 指定默认值: 内部使用 === 判断是否有值
+var [a, b = '2'] = [1, , undefined] // a=1, b=2
+
+// 只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值，解构赋值会依次从这个接口获取值
+let [a, b] = new Set([1, 2, 3]) // a=1, b=2
+
+// 从对象结构：变量与属性同名
+var {a, b} = {b: 2, a: 1}       // a=1, b=2
+
+// 从对象结构：变量与属性不同名
+// 对象解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量，
+// 真正被赋值的是后者，而不是前者(模式)，故 x 是未定义变量
+var {a, x: b} = {x: 2, a: 1} // a=1, b=2, x is not defined
+
+// 先定义后解构
+let a;
+({a} = {a: 1}); // 圆括号是必须的，否则报错
+
+// 嵌套解构
+var [a, [b]] = [1, [2, 3]]    // a=1, b=2
+var {a, {b}} = {a: 1, {b: 2}} // a=1, b=2
+var {a, [b]} = {a: 1, [2, 3]} // a=1, b=2
+var {m: {a}} = {m: {a: 1}}    // a=1, m 只是模式不是变量不会被赋值
+
+// 复杂点的嵌套解构赋值
+let o = {};
+let a = [];
+({ foo: o.prop, bar: a[0] } = { foo: 1, bar: true });
+// obj={prop:1}, arr=[true]
+
+// 对数组进行对象属性的解构：数组本质是特殊的对象
+var arr = [1, 2, 3];
+let {0: a, [arr.length - 1] : b} = arr // a=1, b=3
+
+// 解构字符串
+const [a, b] = 'hello'       // a="h", b="e"
+let {length : len} = 'hello' // len=5
+```
+
+#### 函数参数的解构赋值
+
+```js
+function add([x, y]){return x + y}
+add([1, 2]); // 3
+
+function add({x = 0, y = arg => arg + 1}){return y(x)}
+add({x: 1}); // 2
+
+[[1, 2], [3, 4]].map(([a, b]) => a + b) // [ 3, 7 ]
+```
 
 ### 展开运算符
 
