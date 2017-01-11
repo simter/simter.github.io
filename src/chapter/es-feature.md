@@ -112,7 +112,7 @@ let promise = new Promise(function(resolve, reject)){
 
   if (成功) {
     // 当承诺得到实现时，返回一些有用的东西，如 someThing
-    resolve(someThing) // 状态转为 Resolved，又叫 Fulfilled
+    resolve(someThing) // 状态转为 fulfilled，又叫 resolved
   } else { // 失败
   ...
     // 当承诺无法实现时，返回理由，如 someError
@@ -144,11 +144,11 @@ promise.then(someThing => {
 创建 Promise 实例的其它方法：
 
 ```js
-// 将任意对象转为 Resolved 状态的 Promise 对象：
+// 将任意对象转为 fulfilled 状态的 Promise 对象：
 // 1) 如果参数本身是 Promise 实例，会原封不动返回之
 // 2) 如果参数是一个 thenable 对象 (有 then 方法的对象)，会将这个对象转为 Promise 对象，然后立即执行其 then 方法
-// 3) 参数不是具有 then 方法的对象，或根本就不是对象，会返回一个新的 Promise 对象，状态为 Resolved
-// 4) 不带任何参数，直接返回一个 Resolved 状态的 Promise 对象
+// 3) 参数不是具有 then 方法的对象，或根本就不是对象，会返回一个新的 Promise 对象，状态为 fulfilled
+// 4) 不带任何参数，直接返回一个 fulfilled 状态的 Promise 对象
 let p = Promise.resolve(someThing)
 
 // 将任意对象转为 Rejected 状态的 Promise 对象。
@@ -176,16 +176,16 @@ let p = Promise.race([promise1, promise2, ...])
 Promise 特点总结：
 
 - 状态不受外界影响，且一旦状态改变，就不会再变  
-  > 状态只有两种变化的可能：从 Pending 变为 Resolved 或从 Pending 变为 Rejected。
+  > 状态只有两种变化的可能：从 pending 变为 fulfilled 或从 pending 变为 rejected
     任何时候都可已继续给 Promise 实例附加 then 回调，总会得到结果，永不落空，不像
     事件监听机制，必须在触发之前去监听，事件触发之后再去监听是得不到结果的。
 - 无法中途取消和得知状态的进展过程
-  > 一旦实例化，它就会立即执行，无法中途取消，当处于 Pending 状态时，无法得知目前
+  > 一旦实例化，它就会立即执行，无法中途取消，当处于 pending 状态时，无法得知目前
     进展到哪一个阶段（刚刚开始还是即将完成）。
 - then、catch 内可以继续返回 Promise 实例或任何其它值，返回值将作为下一个 then 函数的参数向下继续传递
-- catch 方法 是 .then(null, rejectHandler) 的语法糖，但并不总是相同
+- catch 方法是等价于 .then(null, onRejected) 的语法糖
   > 建议总是使用 catch 方法，而不使用 then 方法的第二个参数。  
-    当使用 then(resolveHandler, rejectHandler) 时，rejectHandler 不会捕获在 resolveHandler 中抛出的错误。
+    当使用 then(onFulfilled, onRejected) 时，onRejected 不会捕获在 onFulfilled 中抛出的错误。
 - 如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部
   > 上一个 then 内的异常，可以通过下一个 catch 来获取
 
@@ -201,9 +201,10 @@ Promise 特点总结：
 
 ## 在线书籍
 
-- [阮一峰: ECMAScript 6 入门](http://es6.ruanyifeng.com)
+- [JavaScript Promise 迷你书（中文版）](http://liubin.org/promises-book)
 - [Axel Rauschmayer: Exploring ES2016 and ES2017](http://exploringjs.com/es2016-es2017/index.html)
 - [Axel Rauschmayer: Exploring ES6](http://exploringjs.com/es6)
+- [阮一峰: ECMAScript 6 入门](http://es6.ruanyifeng.com)
 
 ## 参考
 
