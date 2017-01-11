@@ -67,13 +67,143 @@ ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前
 
 ### 严格模式
 
+在 ECMAscript 5 中新增了 "严格模式" ([strict mode](https://developer.mozilla.org/zh-CN/docs/JavaScript/Strict_mode))，这种模式使得 Javascript 在更严格的条件下运行。
+
+严格模式可以应用到整个 script 标签或个别函数中。
+
+为整个 script 标签开启严格模式:
+
+```
+<script>
+  "use strict";
+  ...// other code
+</script>
+
+// or script file: /path/to/my.js
+"use strict";
+...// other code
+```
+
+为个别函数开启严格模式:
+
+```js
+function strictFn(){
+  'use strict';
+  ...// other code
+}
+```
+
+在严格模式下：
+
+- 全局变量必须显式声明
+- 函数必须声明在顶层，即不允许在非函数的代码块内声明函数。
+- 禁止使用 with
+- 禁止删除变量
+- 禁止 this 关键字指向全局对象
+- 更多请移步 [这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode)
+
 ### 作用域
 
 var、let、const 声明变量。
 
 ### JSON 操作
 
-### 字符串模板
+JSON.[stringify](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)(value[, replacer[, space]])
+
+```js
+JSON.stringify({})                   // '{}'
+JSON.stringify(true)                 // 'true'
+JSON.stringify('foo')                // '"foo"'
+JSON.stringify([1, 'false', false])  // '[1,"false",false]'
+JSON.stringify({ x: 5 })             // '{"x":5}'
+JSON.stringify({ x: null })          // "{"x":null}"
+JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)) // '"2006-01-02T15:04:05.000Z"'
+JSON.stringify({ x: undefined, y: Object, z: Symbol('') }) // '{}'
+JSON.stringify({ x: [
+  10, undefined, function(){}, Symbol('')
+] }) // '{"x":[10,null,null,null]}' 
+
+// with replacer function
+JSON.stringify({x: "x", n: 1}, (key, value) =>
+  typeof value === 'string' ? undefined : value
+) // '{"n":1}'
+
+// with replacer array
+JSON.stringify({x: "x", y: "y", n: 1}, ['x', 'n']) // '{"x":"x","n":1}'
+
+// toJSON() behavior
+var obj = {
+  foo: 'foo',
+  toJSON: function() {return 'bar'}
+};
+JSON.stringify(obj) // '"bar"'
+```
+
+JSON.[parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)(text[, reviver])
+
+```js
+JSON.parse('{}');              // {}
+JSON.parse('true');            // true
+JSON.parse('"foo"');           // "foo"
+JSON.parse('[1, 5, "false"]'); // [1, 5, "false"]
+JSON.parse('null');            // null
+JSON.parse('{"p": 5}', (key, value) =>
+  typeof value === 'number' ? value * 2 : value
+) // { p: 10 }
+```
+
+注：JSON.parse() 不允许 trailing commas：
+
+```js
+// both will throw a SyntaxError
+JSON.parse('[1, 2, 3, 4, ]');
+JSON.parse('{"foo" : 1, }');
+```
+
+### 模板字符串
+
+模板字符串 (template string) 是增强版的字符串，用反引号 (`)标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+
+嵌入变量、表达式、函数：(写在 ${} 內)
+
+```js
+let name = "world"
+let tpl = `Hello ${name}` // Hello world
+
+let user = {name: "world"}
+tpl = `Hello ${user.name}` // Hello world
+
+// 大括号内可以是任意 JavaScript 表达式，可以进行运算，以及引用对象属性
+let x = 1;
+let y = 2;
+`${x} + ${y} = ${x + y}` // "1 + 2 = 3"
+
+// 也可调用函数
+function fn() {return "Hello World"}
+`${fn()}` // Hello World
+
+// 复杂点的嵌套+函数
+let array = [1, 2, ...]
+let tpl = `${array.map(item => `${item}`).join('')}`
+```
+
+
+如果需要使用反引号，用反斜杠 \ 转义：
+
+```js
+let tpl = `Hello \`world\`` // Hello `world`
+```
+
+多行模板字符串，所有的空格、换行符和缩进都会保留：
+
+```js
+let tpl = `<ul>
+  <li>first</li>
+  <li>second</li>
+</ul>`
+```
+
+更复杂的标签模板请移步 [这里](http://es6.ruanyifeng.com/#docs/string#标签模板)。
 
 ### 箭头函数
 
