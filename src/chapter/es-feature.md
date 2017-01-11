@@ -321,7 +321,7 @@ Promise 特点总结：
 
 更多请移步 [Promises/A+ 规范](https://promisesaplus.com/)、[Promises API Reference](https://www.promisejs.org/api/)。
 
-### 解构赋值 Destructuring
+### [解构赋值 Destructuring](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
 #### 变量的解构赋值
 
@@ -386,11 +386,56 @@ add({x: 1}); // 2
 [[1, 2], [3, 4]].map(([a, b]) => a + b) // [ 3, 7 ]
 ```
 
-### 展开运算符
+### 展开运算符/剩余运算符
 
-### 对象操作
+用三个点号 `...`表示。
 
-### 数组操作
+展开运算符又叫扩展运算符 ([spread operator](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator))，用于展开元素成多个元素。
+
+剩余运算符 ([rest operator](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters)) 则会收集多个元素压缩成一个数组元素。
+
+语法：
+
+```js
+// 用于函数调用: 剩余运算符 | rest 运算符 | 剩余参数
+myFunction(...iterableObj)
+myFunction(a, b, ...theRestArgs)
+
+// 用于数组字面量: 展开运算符
+[...iterableObj, 4, 5]
+```
+
+范例：
+
+```js
+var fn = function(a, b) {}
+var args = [1, 2]
+fn(args[0], args[1]) // 传统写法
+fn(...args)          // 使用扩展运算符
+
+// 合并数组
+var a1 = [2, 3]
+var a2 = [1, ...a1, 4] // [1, 2, 3, 4]
+
+// 向数组末尾追加另一数组的元素
+var a1 = [1, 2], a2 = [3, 4]
+a1.push(...a2) // a1=[1, 2, 3, 4]
+
+// 将类数组对象转换成数组
+var nodeList = document.querySelectorAll('div')
+var array = [...nodeList]
+
+// 字符串转数组
+let a = [...'abc'] // ['a', 'b', 'c']
+
+// 配合解构使用
+var [a, ...b] = [1, 2, 3] // a=1, b=[2, 3]
+
+// 简化函数参数定义
+var fn = function(...args) {return args.join('')}
+fn('a', 'b', 'c') // 'abc'
+```
+
 
 ## 在线书籍
 
