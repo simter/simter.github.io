@@ -231,7 +231,7 @@ var myFn = arg1 => arg1 + 'ok';
 
 不要将 Promise 与异步编程代码的简化等同，如解决异步的回调地狱问题，那只是 Promise 的其中一个使用场景而已。要用承诺模式的概念去理解 Promise，当承诺得到实现时，我们可以通过 then 函数（第一个函数参数）获取承诺的结果，而当承诺被打破、拒绝而无法实现时，我们可以通过 catch (或者 then 的第二个函数参数) 获取承诺无法实现的理由。
 
-该新特性属于 ECMAScript 2015（ES6）规范。
+该新特性属于 ECMAScript 2015（ES6）规范，详见 [这里](http://www.ecma-international.org/ecma-262/7.0/index.html#sec-promise-constructor)。
 
 创建 Promise 实例的标准方法：
 
@@ -318,6 +318,12 @@ Promise 特点总结：
     当使用 then(onFulfilled, onRejected) 时，onRejected 不会捕获在 onFulfilled 中抛出的错误。
 - 如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部
   > 上一个 then 内的异常，可以通过下一个 catch 来获取
+
+Promise 最佳实践：
+
+- 不要嵌套使用，而是链式使用
+- 拒绝的原因应该是异常 Error 的实例
+- 总是在 then、catch 处理函数中返回 promise
 
 更多请移步 [Promises/A+ 规范](https://promisesaplus.com/)、[Promises API Reference](https://www.promisejs.org/api/)。
 
@@ -435,6 +441,64 @@ var [a, ...b] = [1, 2, 3] // a=1, b=[2, 3]
 var fn = function(...args) {return args.join('')}
 fn('a', 'b', 'c') // 'abc'
 ```
+
+## 对象
+
+### 定义对象的属性
+
+```js
+// 方法 1: 直接用标识符作为属性名
+obj.foo = true
+
+// 方法 2: 用表达式作为属性名
+let key = 'a' + 'b'
+obj[key] = 1
+obj = {
+  [key]: 1
+} // obj.ab=1, obj[key]=1, obj['ab']=1
+```
+
+### 属性的简洁表示法
+
+ES6 允许使用简洁的方式直接写入变量和函数，作为对象的属性和方法：
+
+```js
+let prop = 1
+let obj = { 
+  prop,                      // 直接写变量: 属性名为变量名, 属性值为变量值
+  myFn(x) { ... },
+  * myGeneratorFn() { ... }  // 方法是 Generator 函数时前面加星号
+}
+
+// 等同于
+let obj = {
+  prop: prop,
+  myFn: function(x) { ... },
+  myGeneratorFn: function * () { ... }
+}
+```
+
+### 判断两个对象是否相等
+
+ES6 提出 'Same-value equality (同值相等) '算法 `Object.is(obj1, obj2)`，用来解决 `==` 和 `===` 会自动转换数据类型的问题。`Object.is` 比较两个值是否严格相等，与严格比较运算符 `===` 的行为基本一致，不同之处只有两个：一是 `+0` 不等于 `-0`，二是 `NaN` 等于自身。
+
+### 对象的合并/扩展
+
+`Object.assign(target, ...sources)` 方法用于对象的合并，将源对象 source 的所有可枚举属性，复制到目标对象 target，函数的返回值是 target。
+
+```js
+var target = { a: 1, b: 1 }
+var source1 = { b: 2, c: 2 }
+var source2 = { c: 3 }
+Object.assign(target, source1, source2)
+// target={a:1, b:2, c:3}
+```
+
+注意点：
+
+- 实行的是浅拷贝不是深拷贝
+- 只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）
+- Object.assign 把数组视为属性名为 0、1、2 的对象
 
 
 ## 在线书籍
