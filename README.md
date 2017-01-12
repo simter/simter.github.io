@@ -1,4 +1,4 @@
-# [Simter 网站源码](https://github.com/simter/simter.github.io)
+# [Simter 网站源码](https://github.com/simter/simter.github.io/tree/source)
 
 访问 [Simter 网站](http://simter.github.io)。
 
@@ -15,3 +15,11 @@ test                            - 测试
 ```bash
 npm run build
 ```
+
+## Demo
+
+```bash
+npm start
+```
+
+然后用浏览器访问 <http://127.0.0.1:3000>。
