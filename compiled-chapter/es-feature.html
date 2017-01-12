@@ -82,7 +82,7 @@ var myFn = (arg1) =&gt; {
 
 // 或者
 var myFn = arg1 =&gt; arg1 + 'ok';
-</code></pre><p>箭头函数内 this 与使用 function 定义函数内的 this 是两个完全不同的东西，这个要切记、切记、切记。</p><h3>Promise</h3><p>不要将 Promise 与异步编程代码的简化等同，如解决异步的回调地狱问题，那只是 Promise 的其中一个使用场景而已。要用承诺模式的概念去理解 Promise，当承诺得到实现时，我们可以通过 then 函数（第一个函数参数）获取承诺的结果，而当承诺被打破、拒绝而无法实现时，我们可以通过 catch (或者 then 的第二个函数参数) 获取承诺无法实现的理由。</p><p>该新特性属于 ECMAScript 2015（ES6）规范。</p><p>创建 Promise 实例的标准方法：</p><pre><code class=language-js>// 创建实例
+</code></pre><p>箭头函数内 this 与使用 function 定义函数内的 this 是两个完全不同的东西，这个要切记、切记、切记。</p><h3>Promise</h3><p>不要将 Promise 与异步编程代码的简化等同，如解决异步的回调地狱问题，那只是 Promise 的其中一个使用场景而已。要用承诺模式的概念去理解 Promise，当承诺得到实现时，我们可以通过 then 函数（第一个函数参数）获取承诺的结果，而当承诺被打破、拒绝而无法实现时，我们可以通过 catch (或者 then 的第二个函数参数) 获取承诺无法实现的理由。</p><p>该新特性属于 ECMAScript 2015（ES6）规范，详见 <a href=http://www.ecma-international.org/ecma-262/7.0/index.html#sec-promise-constructor>这里</a>。</p><p>创建 Promise 实例的标准方法：</p><pre><code class=language-js>// 创建实例
 let promise = new Promise(function(resolve, reject)){
   ...//任何同步或异步的代码
 
@@ -141,7 +141,7 @@ let p = Promise.all([promise1, promise2, ...])
 // 率先改变的 promiseN 的返回值，传递给 p 的回调函数。
 // 注：Promise.race 方法的参数的要求与 Promise.all 的相同。
 let p = Promise.race([promise1, promise2, ...])
-</code></pre><p>Promise 特点总结：</p><ul><li>状态不受外界影响，且一旦状态改变，就不会再变<blockquote><p>状态只有两种变化的可能：从 pending 变为 fulfilled 或从 pending 变为 rejected 任何时候都可已继续给 Promise 实例附加 then 回调，总会得到结果，永不落空，不像 事件监听机制，必须在触发之前去监听，事件触发之后再去监听是得不到结果的。</p></blockquote></li><li>无法中途取消和得知状态的进展过程<blockquote><p>一旦实例化，它就会立即执行，无法中途取消，当处于 pending 状态时，无法得知目前 进展到哪一个阶段（刚刚开始还是即将完成）。</p></blockquote></li><li>then、catch 内可以继续返回 Promise 实例或任何其它值，返回值将作为下一个 then 函数的参数向下继续传递</li><li>catch 方法是等价于 .then(null, onRejected) 的语法糖<blockquote><p>建议总是使用 catch 方法，而不使用 then 方法的第二个参数。<br>当使用 then(onFulfilled, onRejected) 时，onRejected 不会捕获在 onFulfilled 中抛出的错误。</p></blockquote></li><li>如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部<blockquote><p>上一个 then 内的异常，可以通过下一个 catch 来获取</p></blockquote></li></ul><p>更多请移步 <a href="https://promisesaplus.com/">Promises/A+ 规范</a>、<a href="https://www.promisejs.org/api/">Promises API Reference</a>。</p><h3><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>解构赋值 Destructuring</a></h3><h4>变量的解构赋值</h4><p>ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构。如果解构不成功，变量的值就等于 undefined。 解构时可以指定默认值，默认值生效的条件是，对象属性值或数组对应值严格等于 undefined (===)。</p><pre><code class=language-js>// 从数组解构赋值
+</code></pre><p>Promise 特点总结：</p><ul><li>状态不受外界影响，且一旦状态改变，就不会再变<blockquote><p>状态只有两种变化的可能：从 pending 变为 fulfilled 或从 pending 变为 rejected 任何时候都可已继续给 Promise 实例附加 then 回调，总会得到结果，永不落空，不像 事件监听机制，必须在触发之前去监听，事件触发之后再去监听是得不到结果的。</p></blockquote></li><li>无法中途取消和得知状态的进展过程<blockquote><p>一旦实例化，它就会立即执行，无法中途取消，当处于 pending 状态时，无法得知目前 进展到哪一个阶段（刚刚开始还是即将完成）。</p></blockquote></li><li>then、catch 内可以继续返回 Promise 实例或任何其它值，返回值将作为下一个 then 函数的参数向下继续传递</li><li>catch 方法是等价于 .then(null, onRejected) 的语法糖<blockquote><p>建议总是使用 catch 方法，而不使用 then 方法的第二个参数。<br>当使用 then(onFulfilled, onRejected) 时，onRejected 不会捕获在 onFulfilled 中抛出的错误。</p></blockquote></li><li>如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部<blockquote><p>上一个 then 内的异常，可以通过下一个 catch 来获取</p></blockquote></li></ul><p>Promise 最佳实践：</p><ul><li>不要嵌套使用，而是链式使用</li><li>拒绝的原因应该是异常 Error 的实例</li><li>总是在 then、catch 处理函数中返回 promise</li></ul><p>更多请移步 <a href="https://promisesaplus.com/">Promises/A+ 规范</a>、<a href="https://www.promisejs.org/api/">Promises API Reference</a>。</p><h3><a href=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment>解构赋值 Destructuring</a></h3><h4>变量的解构赋值</h4><p>ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构。如果解构不成功，变量的值就等于 undefined。 解构时可以指定默认值，默认值生效的条件是，对象属性值或数组对应值严格等于 undefined (===)。</p><pre><code class=language-js>// 从数组解构赋值
 var [a, b] = [1, 2]          // a=1, b=2
 let [a, b] = [1]             // a=1, b=undefined
 const [a, b] = [1, 2, 3]     // a=1, b=2
@@ -223,4 +223,31 @@ var [a, ...b] = [1, 2, 3] // a=1, b=[2, 3]
 // 简化函数参数定义
 var fn = function(...args) {return args.join('')}
 fn('a', 'b', 'c') // 'abc'
-</code></pre><h2>在线书籍</h2><ul><li><a href=http://liubin.org/promises-book>JavaScript Promise 迷你书（中文版）</a></li><li><a href=http://exploringjs.com/es2016-es2017/index.html>Axel Rauschmayer: Exploring ES2016 and ES2017</a></li><li><a href=http://exploringjs.com/es6>Axel Rauschmayer: Exploring ES6</a></li><li><a href=http://es6.ruanyifeng.com>阮一峰: ECMAScript 6 入门</a></li></ul><h2>参考</h2><ul><li><a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>ECMA-262: ECMAScript Language Specification</a></li><li><a href=https://zh.wikipedia.org/wiki/ECMAScript>维基百科 ECMAScript</a></li><li><a href=https://huangxuan.me/2015/09/22/js-version>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？</a></li><li><a href=http://wwsun.github.io/posts/new-in-es2016.html>ES 新特性及 ECMAScript 标准的制定流程</a></li><li><a href=http://javascript.ruanyifeng.com/introduction/history.html>JavaScript 语言的历史</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO/IEC 16262:2011</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=33835">ISO/IEC 16262:2002</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=29696">ISO/IEC 16262:1998</a></li><li><a href=https://gold.xitu.io/post/584f9ef7128fe100692e67e2>ES5 新增特性汇总</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTE2NTE1Ng==&amp;mid=2649515779&amp;idx=1&amp;sn=a09ec43ee49f2c210ab3132d8463498d">ES6 箭头函数使用禁忌</a></li><li><a href="http://coderlt.coding.me/2016/12/03/promise-in-depth-an-introduction-1/">深入理解 Promise (上)</a></li><li><a href="http://efe.baidu.com/blog/promises-anti-pattern/">谈谈使用 Promise 时的一些反模式</a></li></ul>
+</code></pre><h2>对象</h2><h3>定义对象的属性</h3><pre><code class=language-js>// 方法 1: 直接用标识符作为属性名
+obj.foo = true
+
+// 方法 2: 用表达式作为属性名
+let key = 'a' + 'b'
+obj[key] = 1
+obj = {
+  [key]: 1
+} // obj.ab=1, obj[key]=1, obj['ab']=1
+</code></pre><h3>属性的简洁表示法</h3><p>ES6 允许使用简洁的方式直接写入变量和函数，作为对象的属性和方法：</p><pre><code class=language-js>let prop = 1
+let obj = { 
+  prop,                      // 直接写变量: 属性名为变量名, 属性值为变量值
+  myFn(x) { ... },
+  * myGeneratorFn() { ... }  // 方法是 Generator 函数时前面加星号
+}
+
+// 等同于
+let obj = {
+  prop: prop,
+  myFn: function(x) { ... },
+  myGeneratorFn: function * () { ... }
+}
+</code></pre><h3>判断两个对象是否相等</h3><p>ES6 提出 'Same-value equality (同值相等) '算法 <code>Object.is(obj1, obj2)</code>，用来解决 <code>==</code> 和 <code>===</code> 会自动转换数据类型的问题。<code>Object.is</code> 比较两个值是否严格相等，与严格比较运算符 <code>===</code> 的行为基本一致，不同之处只有两个：一是 <code>+0</code> 不等于 <code>-0</code>，二是 <code>NaN</code> 等于自身。</p><h3>对象的合并/扩展</h3><p><code>Object.assign(target, ...sources)</code> 方法用于对象的合并，将源对象 source 的所有可枚举属性，复制到目标对象 target，函数的返回值是 target。</p><pre><code class=language-js>var target = { a: 1, b: 1 }
+var source1 = { b: 2, c: 2 }
+var source2 = { c: 3 }
+Object.assign(target, source1, source2)
+// target={a:1, b:2, c:3}
+</code></pre><p>注意点：</p><ul><li>实行的是浅拷贝不是深拷贝</li><li>只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）</li><li>Object.assign 把数组视为属性名为 0、1、2 的对象</li></ul><h2>在线书籍</h2><ul><li><a href=http://liubin.org/promises-book>JavaScript Promise 迷你书（中文版）</a></li><li><a href=http://exploringjs.com/es2016-es2017/index.html>Axel Rauschmayer: Exploring ES2016 and ES2017</a></li><li><a href=http://exploringjs.com/es6>Axel Rauschmayer: Exploring ES6</a></li><li><a href=http://es6.ruanyifeng.com>阮一峰: ECMAScript 6 入门</a></li></ul><h2>参考</h2><ul><li><a href=http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf>ECMA-262: ECMAScript Language Specification</a></li><li><a href=https://zh.wikipedia.org/wiki/ECMAScript>维基百科 ECMAScript</a></li><li><a href=https://huangxuan.me/2015/09/22/js-version>ES5, ES6, ES2016, ES.Next: JavaScript 的版本是怎么回事？</a></li><li><a href=http://wwsun.github.io/posts/new-in-es2016.html>ES 新特性及 ECMAScript 标准的制定流程</a></li><li><a href=http://javascript.ruanyifeng.com/introduction/history.html>JavaScript 语言的历史</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=55755">ISO/IEC 16262:2011</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=33835">ISO/IEC 16262:2002</a></li><li><a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=29696">ISO/IEC 16262:1998</a></li><li><a href=https://gold.xitu.io/post/584f9ef7128fe100692e67e2>ES5 新增特性汇总</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzI1MTE2NTE1Ng==&amp;mid=2649515779&amp;idx=1&amp;sn=a09ec43ee49f2c210ab3132d8463498d">ES6 箭头函数使用禁忌</a></li><li><a href="http://coderlt.coding.me/2016/12/03/promise-in-depth-an-introduction-1/">深入理解 Promise (上)</a></li><li><a href="http://efe.baidu.com/blog/promises-anti-pattern/">谈谈使用 Promise 时的一些反模式</a></li></ul>
