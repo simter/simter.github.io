@@ -49,10 +49,17 @@ let vm = new Vue({
       if (id) {
         let chapter = { id: id, label: 'hash' }
         // replace hash path to real path
-        history.replaceState(chapter, chapter.label, to)
+        history.replaceState(chapter, chapter.label, to.split('#')[0])
 
         // load hash chapter content
-        this.fetchChapterContent(id)
+        this.fetchChapterContent(id).then(() => {
+          // scroll to anchor
+          let hash = to.split('#')[1]
+          if (hash) {
+            let a = document.querySelector(`a[name="${hash}"]`)
+            a && a.click()
+          }
+        })
       }
     }
   }

@@ -8,8 +8,7 @@ if (mdCompilerType == 'marked') {               // use marked
   // generate anchor for h level
   var renderer = new marked.Renderer()
   renderer.heading = function (text, level) {
-    var href = text.toLowerCase().replace(/[^\w]+/g, '-');
-    return `<h${level}><a class="anchor" href="#${href}"><span class="header-link"></span></a>${text}</h${level}>`
+    return `<h${level} id="${text}">${text}<a class="anchor" name="${text}" href="#${text}">§</a></h${level}>`
   }
   marked.setOptions({ renderer })
 } else if (mdCompilerType == 'markdown-it') {   // use markdown-it

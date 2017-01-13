@@ -50,7 +50,19 @@ main h6:before {
 /* h1-h6 counter -- end */
 
 /* h1-h6 anchor -- start */
+.anchor {
+  margin-left: 0.5em;
+  display: none;
+}
 
+h1:hover > .anchor,
+h2:hover > .anchor,
+h3:hover > .anchor,
+h4:hover > .anchor,
+h5:hover > .anchor,
+h6:hover > .anchor {
+  display: inline;
+}
 /* h1-h6 anchor -- end */
 
 table {
