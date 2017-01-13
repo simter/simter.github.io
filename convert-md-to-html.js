@@ -1,7 +1,25 @@
+const minHtml = true
+const mdCompilerType = ['marked', 'markdown-it'][0]
+let markdownIt, marked
+
+if (mdCompilerType == 'marked') {               // use marked
+  marked = require('marked')
+
+  // generate anchor for h level
+  var renderer = new marked.Renderer()
+  renderer.heading = function (text, level) {
+    var href = text.toLowerCase().replace(/[^\w]+/g, '-');
+    return `<h${level}><a class="anchor" href="#${href}"><span class="header-link"></span></a>${text}</h${level}>`
+  }
+  marked.setOptions({ renderer })
+} else if (mdCompilerType == 'markdown-it') {   // use markdown-it
+  markdownIt = new require('markdown-it')({ html: true })
+} else throw new Error(`unsupport markdown compiler: ${mdCompilerType}`)
+
+
 const path = require('path')
 const fs = require('fs')
 const fsp = require('fs-promise')
-const md = require('markdown-it')()
 const Minimize = require('minimize'), min = new Minimize();
 const watch = require('chokidar').watch
 
@@ -27,7 +45,7 @@ fsp.readdir(sourceChapterDir)
       let newName = f.replace(path.extname(f), '.html');
       let compiledFile = path.resolve(targetCompiledDir, newName)
       convertFile(sourceFile, compiledFile).catch(err => console.log(err))
-      
+
       let redirectFile = path.resolve(targetRedirectDir, newName)
       fs.writeFileSync(redirectFile, redirectContent)
     });
@@ -36,5 +54,16 @@ fsp.readdir(sourceChapterDir)
 
 function convertFile(fromFile, toFile) {
   console.log('convert %s', fromFile)
-  return fsp.readFile(fromFile).then(content => fsp.writeFile(toFile, min.parse(md.render(content.toString()))))
+  return fsp.readFile(fromFile).then(content => {
+    let compiled = compile(content.toString())
+    fsp.writeFile(toFile, minHtml ? min.parse(compiled) : compiled)
+  })
+}
+
+function compile(source) {
+  if (mdCompilerType == 'marked') {             // use marked
+    return marked(source)
+  } else if (mdCompilerType == 'markdown-it') { // use markdown-it
+    return markdownIt.render(source)
+  }
 }
