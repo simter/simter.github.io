@@ -2,10 +2,10 @@
 
 ## Hosts 文件
 
-      系统 | 路径
------------|:----
-   Windows | C:\Windows\System32\drivers\etc\hosts
-Unix/Linux | /etc/hosts
+| 系统       | 路径                                   |
+|------------|:--------------------------------------|
+| Windows    | C:\Windows\System32\drivers\etc\hosts |
+| Unix/Linux | /etc/hosts                            |
 
 ## Hosts IP
 
@@ -20,6 +20,7 @@ Unix/Linux | /etc/hosts
 2016-01-01 | 91.198.174.192 [[from]][laod-hosts]
 
 样本:
+
 ```
 198.35.26.96 zh.wikipedia.org
 198.35.26.96 zh.m.wikipedia.org
@@ -35,6 +36,7 @@ Unix/Linux | /etc/hosts
 2017-01-11 | 66.29.212.110/68.232.44.251 [[from]][laod-hosts]
 
 样本:
+
 ```
 66.29.212.110 w3schools.com
 66.29.212.110 www.w3schools.com
@@ -64,6 +66,7 @@ assets-cdn.github.com IP:
 
 
 样本:
+
 ```
 23.235.47.133 assets-cdn.github.com
 192.30.253.119 gist.github.com
@@ -79,6 +82,7 @@ assets-cdn.github.com IP:
 使用 [Google] Chrome 的开发者工具，看哪个域名堵塞就将其加入 hosts 配置即可。记住访问 Google 的服务，一定要用 https，不要用 http。为了避免 Google 自动根据地区转发，可以直接访问 <https://google.com/ncr>。
 
 样本: (Google 搜索)
+
 ```
 61.91.161.217 www.google.com
 61.91.161.217 google.com
