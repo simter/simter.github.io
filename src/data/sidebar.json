@@ -28,12 +28,16 @@
             "label": "ES 特征收集"
           },
           {
-            "id": "json",
-            "label": "JSON"
+            "id": "vue-lifecycle",
+            "label": "Vue 生命周期"
           }
         ]
       }
     ]
+  },
+  {
+    "id": "hosts",
+    "label": "Hosts"
   },
   {
     "id": "level-a",
@@ -76,9 +80,5 @@
         "label": "二级菜单B3"
       }
     ]
-  },
-  {
-    "id": "hosts",
-    "label": "Hosts"
   }
 ]
