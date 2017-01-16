@@ -41,20 +41,21 @@ let vm = new Vue({
     }
   },
   created: function () {
-    //console.log('location.hash=', location.hash)
+    console.log('created location.hash=%s', location.hash)
     if (location.hash) {
-      const to = location.hash.substr(1)
-      let id = to.substr(to.lastIndexOf('/') + 1)
+      const to = location.hash.substr(1).split('#')
+      let id = to[0].substr(to[0].lastIndexOf('/') + 1)
       id = id.substring(0, id.indexOf('.html'))
       if (id) {
+        console.log('created chapterId=%s, hash=%s', id, to[1])
         let chapter = { id: id, label: 'hash' }
         // replace hash path to real path
-        history.replaceState(chapter, chapter.label, to.split('#')[0])
+        history.replaceState(chapter, chapter.label, to[0])
 
         // load hash chapter content
         this.fetchChapterContent(id).then(() => {
           // scroll to anchor
-          let hash = to.split('#')[1]
+          let hash = to[1]
           if (hash) {
             let a = document.querySelector(`a[name="${hash}"]`)
             a && a.click()

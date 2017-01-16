@@ -62,6 +62,7 @@ h4:hover > .anchor,
 h5:hover > .anchor,
 h6:hover > .anchor {
   display: inline;
+  color: inherit;
 }
 /* h1-h6 anchor -- end */
 

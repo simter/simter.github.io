@@ -8,7 +8,8 @@ if (mdCompilerType == 'marked') {               // use marked
   // generate anchor for h level
   var renderer = new marked.Renderer()
   renderer.heading = function (text, level) {
-    return `<h${level} id="${text}">${text}<a class="anchor" name="${text}" href="#${text}">§</a></h${level}>`
+    let hashId = text.replace(/<.*?>/ig, '')
+    return `<h${level} id="${hashId}">${text}<a class="anchor" name="${hashId}" href="#${hashId}">§</a></h${level}>`
   }
   marked.setOptions({ renderer })
 } else if (mdCompilerType == 'markdown-it') {   // use markdown-it
