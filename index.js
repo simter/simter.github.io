@@ -22,7 +22,7 @@ Vue = 'default' in Vue ? Vue['default'] : Vue;
 
 __$styleInject("html{background-color:#000;color:#888;font-family:微软雅黑,宋体,sans-serif}#app,body,html{height:100%;padding:0;margin:0;overflow:hidden}pre{border:1px solid #2b2b2b;margin:0;padding:.5em;background-color:#001;line-height:1.5em}a{color:#880;text-decoration:none}a:focus{color:#881}",undefined);
 
-__$styleInject("table{table-layout:fixed;border-spacing:0;background:none;padding:0;margin:0;cursor:default;border-collapse:collapse}tr{height:1.5em}td,th{border:1px solid #2b2b2b;padding:.15em .25em}blockquote{border-style:solid;border-color:blue;border-width:0 0 0 4px;margin:.5em;padding:.25em .5em;background-color:#001;line-height:1.5em}",undefined);
+__$styleInject("main{counter-reset:main}main h1{counter-reset:b}main h2{counter-reset:c}main h3{counter-reset:d}main h4{counter-reset:e}main h5{counter-reset:f}main h2:before{counter-increment:b;content:counter(b) \". \"}main h3:before{counter-increment:c;content:counter(b) \".\" counter(c) \". \"}main h4:before{counter-increment:d;content:counter(b) \".\" counter(c) \".\" counter(d) \". \"}main h5:before{counter-increment:e;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \". \"}main h6:before{counter-increment:f;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \".\" counter(f) \". \"}.anchor{margin-left:.5em;display:none}h1:hover>.anchor,h2:hover>.anchor,h3:hover>.anchor,h4:hover>.anchor,h5:hover>.anchor,h6:hover>.anchor{display:inline;color:inherit}table{table-layout:fixed;border-spacing:0;background:none;padding:0;margin:0;cursor:default;border-collapse:collapse}tr{height:1.5em}td,th{border:1px solid #2b2b2b;padding:.15em .25em}blockquote{border-style:solid;border-color:blue;border-width:0 0 0 4px;margin:.5em;padding:.25em .5em;background-color:#001;line-height:1.5em}",undefined);
 
 __$styleInject(".layout{height:100%;overflow:hidden;display:flex;flex-direction:column}.layout>header{display:none;flex-grow:0;border-bottom:1px solid #2b2b2b}.layout>header .logo{margin-top:4px}.layout>div{flex-grow:1;display:flex;flex-direction:row}.layout>div>aside{min-width:10em;border-right:1px solid #2b2b2b;padding:1em;overflow:auto}.layout>div>aside>.sidebar{padding-left:0}.layout>div>main{flex-grow:1;padding:1em;overflow:auto}.layout>footer{flex-grow:0;border-top:1px solid #2b2b2b;color:#666;text-align:center;font-size:80%;padding:.25em}.layout>footer a{color:inherit;text-decoration:none}",undefined);
 
@@ -127,12 +127,16 @@ var sidebarItems = [
             "label": "ES 特征收集"
           },
           {
-            "id": "json",
-            "label": "JSON"
+            "id": "vue-lifecycle",
+            "label": "Vue 生命周期"
           }
         ]
       }
     ]
+  },
+  {
+    "id": "hosts",
+    "label": "Hosts"
   },
   {
     "id": "level-a",
@@ -175,10 +179,6 @@ var sidebarItems = [
         "label": "二级菜单B3"
       }
     ]
-  },
-  {
-    "id": "hosts",
-    "label": "Hosts"
   }
 ];
 
@@ -219,18 +219,26 @@ var vm = new Vue({
     }
   },
   created: function () {
-    //console.log('location.hash=', location.hash)
+    console.log('created location.hash=%s', location.hash);
     if (location.hash) {
-      var to = location.hash.substr(1);
-      var id = to.substr(to.lastIndexOf('/') + 1);
+      var to = location.hash.substr(1).split('#');
+      var id = to[0].substr(to[0].lastIndexOf('/') + 1);
       id = id.substring(0, id.indexOf('.html'));
       if (id) {
+        console.log('created chapterId=%s, hash=%s', id, to[1]);
         var chapter = { id: id, label: 'hash' };
         // replace hash path to real path
-        history.replaceState(chapter, chapter.label, to);
+        history.replaceState(chapter, chapter.label, to[0]);
 
         // load hash chapter content
-        this.fetchChapterContent(id);
+        this.fetchChapterContent(id).then(function () {
+          // scroll to anchor
+          var hash = to[1];
+          if (hash) {
+            var a = document.querySelector(("a[name=\"" + hash + "\"]"));
+            a && a.click();
+          }
+        });
       }
     }
   }
