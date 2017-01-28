@@ -97,6 +97,8 @@ staticRenderFns: [],
     }
   };
 
+var about = "<h1 id=\"-\">概述</h1>\n<p><a href=\"https://github.com/simter\">Simter</a> 组件、应用的说明文档。本文档托管在 <a href=\"https://github.com/simter/simter.github.io\">https://github.com/simter/simter.github.io</a>。</p>\n";
+
 var sidebarItems = [
   {
     "id": "about",
@@ -182,72 +184,142 @@ var sidebarItems = [
   }
 ];
 
-var cache = {};
-
-var vm = new Vue({
-  el: '#app',
-  components: {
-    'app-layout': layout,
-    'app-tree': tree
-  },
-  data: {
-    sidebarItems: sidebarItems,
-    mainContent: ''
-  },
-  methods: {
-    forwardToChapter: function forwardToChapter(item) {
-      console.log('forwardToChapter id=%s', item.id);
-      if (history.state && history.state.id === item.id) { return }
-
-      // record state
-      history.pushState(item, item.label, ("/chapter/" + (item.id) + ".html"));
-
-      // get chapter content and show it in main region
-      this.fetchChapterContent(item.id);
-    },
-    fetchChapterContent: function fetchChapterContent(id) {
-      var this$1 = this;
-
-      if (cache[id]) {
-        this.mainContent = cache[id];
-      } else {
-        return fetch(("/compiled-chapter/" + id + ".html"))
-          .then(function (res) { return res.text(); })
-          .then(function (text) { return cache[id] = this$1.mainContent = text; })
-          .catch(function (error) { return this$1.mainContent = error.message || "文章加载失败"; })
-      }
-    }
-  },
-  created: function () {
-    console.log('created location.hash=%s', location.hash);
-    if (location.hash) {
-      var to = location.hash.substr(1).split('#');
-      var id = to[0].substr(to[0].lastIndexOf('/') + 1);
-      id = id.substring(0, id.indexOf('.html'));
-      if (id) {
-        console.log('created chapterId=%s, hash=%s', id, to[1]);
-        var chapter = { id: id, label: 'hash' };
-        // replace hash path to real path
-        history.replaceState(chapter, chapter.label, to[0]);
-
-        // load hash chapter content
-        this.fetchChapterContent(id).then(function () {
-          // scroll to anchor
-          var hash = to[1];
-          if (hash) {
-            var a = document.querySelector(("a[name=\"" + hash + "\"]"));
-            a && a.click();
-          }
-        });
-      }
-    }
-  }
-});
-
-window.onpopstate = function (event) {
-  if (!event.state) { return }
-  //console.log('location=%s, state=%s', location.href, JSON.stringify(event.state))
-  vm.mainContent = cache[event.state.id] || '';
+/**
+ * Config which polyfill to load.
+ * The key is the global name.
+ * The value is polyfill fill path.
+ */
+var polyfill = {
+  // https://github.com/taylorhakes/promise-polyfill
+  Promise: 'lib/polyfill/promise.min.js',
+  // https://github.com/github/fetch
+  fetch: 'lib/polyfill/fetch.min.js'
 };
+var onAllLoaded;
+
+/**
+ * Load the polyfill by name.
+ * If the name has a browser native implementation, 
+ * it only set `native` property to true and then do nothing.
+ * Otherwise auto load the polyfill implementation.
+ * After the loading, set `loaded` property to true.
+ * @param {String} name - the global name to polyfill
+ */
+function laod(name) {
+  if (typeof polyfill[name] == 'string') { polyfill[name] = { path: polyfill[name] }; }
+  polyfill[name].native = !!window[name];
+  if (polyfill[name].native) {
+    polyfill[name].loaded = polyfill[name].native;
+    judge();
+    return
+  }
+
+  // load polyfill
+  var s = document.createElement('script');
+  s.src = polyfill[name].path;
+  s.async = true;
+  s.onload = function () {
+    polyfill[name].loaded = true;
+    console.info(("load polyfill '" + name + "' success: path=" + (polyfill[name].path)));
+    judge();
+  };
+  s.onerror = function (error) {
+    polyfill[name].loaded = false;
+    console.error(("load polyfill '" + name + "' failed: path=" + (polyfill[name].path)));
+    judge();
+  };
+  document.head.appendChild(s);
+}
+
+/**
+ * Judge whether all polyfills have been dealed.
+ * If all dealed, call the onAllLoaded function.
+ */
+function judge() {
+  for (var key in polyfill) {
+    if (polyfill[key].loaded === undefined) { return }
+  }
+  onAllLoaded();
+}
+
+// default export - load all polyfills
+var autoLoad = function (cb) {
+  if ( cb === void 0 ) cb = function () { };
+
+  onAllLoaded = cb;
+  Object.keys(polyfill).forEach(function (key) { return laod(key); });
+};
+
+autoLoad(function () {
+  console.log('all polyfills have been dealed');
+
+  var cache = {};
+
+  var vm = new Vue({
+    el: '#app',
+    components: {
+      'app-layout': layout,
+      'app-tree': tree
+    },
+    data: {
+      sidebarItems: sidebarItems,
+      mainContent: about
+    },
+    methods: {
+      forwardToChapter: function forwardToChapter(item) {
+        console.log('forwardToChapter id=%s', item.id);
+        if (history.state && history.state.id === item.id) { return }
+
+        // record state
+        history.pushState(item, item.label, ("/chapter/" + (item.id) + ".html"));
+
+        // get chapter content and show it in main region
+        this.fetchChapterContent(item.id);
+      },
+      fetchChapterContent: function fetchChapterContent(id) {
+        var this$1 = this;
+
+        if (cache[id]) {
+          this.mainContent = cache[id];
+        } else {
+          return fetch(("/compiled-chapter/" + id + ".html"))
+            .then(function (res) { return res.text(); })
+            .then(function (text) { return cache[id] = this$1.mainContent = text; })
+            .catch(function (error) { return this$1.mainContent = error.message || "文章加载失败"; })
+        }
+      }
+    },
+    created: function () {
+      console.log('created location.hash=%s', location.hash);
+      if (location.hash) {
+        var to = location.hash.substr(1).split('#');
+        var id = to[0].substr(to[0].lastIndexOf('/') + 1);
+        id = id.substring(0, id.indexOf('.html'));
+        if (id) {
+          console.log('created chapterId=%s, hash=%s', id, to[1]);
+          var chapter = { id: id, label: 'hash' };
+          // replace hash path to real path
+          history.replaceState(chapter, chapter.label, to[0]);
+
+          // load hash chapter content
+          this.fetchChapterContent(id).then(function () {
+            // scroll to anchor
+            var hash = to[1];
+            if (hash) {
+              var a = document.querySelector(("a[name=\"" + hash + "\"]"));
+              a && a.click();
+            }
+          });
+        }
+      }
+    }
+  });
+
+  window.onpopstate = function (event) {
+    if (!event.state) { return }
+    //console.log('location=%s, state=%s', location.href, JSON.stringify(event.state))
+    vm.mainContent = cache[event.state.id] || '';
+  };
+});
 
 }(Vue));
