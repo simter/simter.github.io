@@ -3,6 +3,10 @@ main {
   counter-reset: main;
 }
 
+main img {
+  max-width:98%;
+}
+
 main h1 {
   counter-reset: main-h1;
 }
