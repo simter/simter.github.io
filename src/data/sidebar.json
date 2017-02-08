@@ -9,7 +9,11 @@
   },
   {
     "id": "rest-rule",
-    "label": "REST 规范"
+    "label": "REST 接口设计规范"
+  },
+  {
+    "id": "task-flow",
+    "label": "任务处理流程"
   },
   {
     "id": "unit-test-rule",
