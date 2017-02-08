@@ -1,0 +1,60 @@
+<h1 id=通用编码规范>通用编码规范<a class=anchor name=通用编码规范 href=#通用编码规范>§</a></h1><p>不管有多少人共同参与同一项目，一定要确保每一行代码都像是同一个人编写的。这是编码规范的终极目的。</p><p>除非特殊说明，否则以下提到的文本文件泛指包括 Java、JS、JSON、XML、HTML、CSS 等代码文件及其它未提到的纯文本文档。</p><h2 id=文件编码>文件编码<a class=anchor name=文件编码 href=#文件编码>§</a></h2><p>除非有特殊要求，否则文本文件统一使用 UTF-8 无 BOM 编码。</p><h2 id=列限制与换行对齐>列限制与换行对齐<a class=anchor name=列限制与换行对齐 href=#列限制与换行对齐>§</a></h2><p>一个文本文件可以选择一行 80 个字符、100 个字符或 120 个字符的列宽限制。由于现在用来编码的显示器都基本上是大屏、宽屏，因此我们推荐并坚持使用 120 个字符的列宽限制。注意 1 个全角字符或中文字占用 2 个字符的宽度。</p><p>除了下述例外，任何一行如果超过这个字符数限制，必须自动换行：</p><ul><li>不可能满足列限制的行 (如一个长 URL)。</li><li>Java 的 package 和 import 语句。</li><li>注释中那些可能被剪切并粘贴到 shell 中的命令行。</li></ul><p>自动换行时缩进至少 +2 个空格，并且按需要添加更多的空格来对齐相应的元素：</p><ul><li>HTML 或 XML 的节点属性换行时，在前面添加空格对齐第一个属性名</li></ul><pre><code class=lang-xml>&lt;X attr11=&quot;v11&quot; attr12=&quot;v12&quot; ... attr1n=&quot;v1N&quot;
+   attr21=&quot;v21&quot; attr22=&quot;v22&quot; ... attr2n=&quot;v2N&quot;
+   attr31=&quot;v31&quot; attr32=&quot;v32&quot; ... attr3n=&quot;v3N&quot;
+   attr41=&quot;v31&quot; attr42=&quot;v32&quot; ... attr4n=&quot;v3N&quot;&gt;
+&lt;/X&gt;
+&lt;XXX attr11=&quot;v11&quot; attr12=&quot;v12&quot; ... attr1n=&quot;v1N&quot;
+     attr21=&quot;v21&quot; attr22=&quot;v22&quot; ... attr2n=&quot;v2N&quot;
+     attr31=&quot;v31&quot; attr32=&quot;v32&quot; ... attr3n=&quot;v3N&quot;
+     attr41=&quot;v31&quot; attr42=&quot;v32&quot; ... attr4n=&quot;v3N&quot;&gt;
+&lt;/XXX&gt;
+</code></pre><ul><li>Java、JS 方法参数多导致要换行时，在前面添加空格对齐第一个参数</li></ul><pre><code class=lang-java>// Java
+public void methodName(String arg11, String arg12 ... String arg1N
+                       String arg21, String arg22 ... String arg2N) {
+  ...
+}
+</code></pre><pre><code class=lang-js>// JS
+function methodName(arg11, arg12 ... arg1N
+                    arg21, arg22 ... arg2N) {
+  ...
+}
+</code></pre><h2 id=代码缩进>代码缩进<a class=anchor name=代码缩进 href=#代码缩进>§</a></h2><p>统一缩进两个英文空格。不使用制表符 tab，以保证在所有环境下获得一致的展现。范例如下所示。</p><p>HTML 文件：</p><pre><code class=lang-html>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello world!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>CSS 文件：</p><pre><code class=lang-css>.selector[type=text] {
+  padding: 15px;
+  margin: 0px 0px 15px;
+}
+</code></pre><p>JS 文件：</p><pre><code class=lang-js>function add(a, b) {
+  return a + b;
+}
+
+let a = add(1, 2);
+</code></pre><p>Java 文件：</p><pre><code class=lang-java>package tech.simter;
+
+public class Utils {
+  public int String add(int a, int b) {
+    return a + b;
+  }
+}
+</code></pre><p>JSON 文件：</p><pre><code class=lang-json>[
+  {&quot;id&quot;: 1, &quot;name&quot;: &quot;RJ1&quot;},
+  {&quot;id&quot;: 2, &quot;name&quot;: &quot;RJ2&quot;}
+]
+</code></pre><p>XML 文件：</p><pre><code class=lang-xml>&lt;project&gt;
+  &lt;name&gt;simter-json&lt;/name&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></pre><h2 id=参考>参考<a class=anchor name=参考 href=#参考>§</a></h2><ul><li><a href="http://www.vaikan.com/coding-standards/">编码规范集锦</a></li><li><a href=http://lxr.linux.no/linux/Documentation/CodingStyle>Linux内核编码风格</a></li><li>Google 开源项目风格指南: <a href=https://google.github.io/styleguide>官方英文版</a>-<a href=https://github.com/google/styleguide>Github</a>、<a href=http://zh-google-styleguide.readthedocs.io>中文翻译版</a>-<a href=https://github.com/zh-google-styleguide/zh-google-styleguide>Github</a></li><li><a href=http://www.hawstein.com/posts/google-java-style.html>Google Java 编程风格指南 - Hawstein 翻译</a></li><li><a href=http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html>Oracle 官方的 Java 语言编码规范</a></li><li><a href="http://codeguide.bootcss.com/">codeguide.bootcss.com - 编码规范 by @mdo</a></li><li><a href=http://itmyhome.com/html>麦田: HTML 编码规范</a></li><li><a href=https://zhongsp.gitbooks.io/typescript-handbook/content/doc/wiki/coding_guidelines.html>TypeScript 开发团队编码规范</a></li><li><a href=http://www.infoq.com/cn/news/2014/02/google-java-coding-standards>InfoQ: Google 的 Java 编码规范</a></li><li><a href=https://psr.phphub.org>PHP 标准规范</a></li><li><a href=http://www.vaikan.com/things-everyone-should-do-code-review>谷歌是如何做代码审查的</a></li><li><a href=http://www.vaikan.com/google-coding-standards>为什么谷歌要执行严格的代码编写规范</a></li></ul>

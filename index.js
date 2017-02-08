@@ -38,7 +38,10 @@ __$styleInject(".tree{list-style-type:none;margin:0;padding-left:1em;line-height
 
 __$styleInject("",undefined);
 
-var treeNode = {
+/**
+   * TreeNode component
+   */
+  var treeNode = {
 render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ node: true, active: _vm.active }},[_c('a',{attrs:{"href":"/charpter/"+_vm.id+".html"},on:{"click":function($event){$event.preventDefault();_vm.activate($event);}}},[_vm._v(_vm._s(_vm.name))]),_vm._v(" "),(_vm.children)?_c('tree',{attrs:{"nodes":_vm.children,"event-hub":_vm.eventHub},on:{"node-activated":function($event){_vm.$emit("node-activated", arguments[0]);}}}):_vm._e()],1)},
 staticRenderFns: [],
     props: {
@@ -103,7 +106,29 @@ var sidebarItems = [
   },
   {
     "id": "code-rule",
-    "label": "编码规范"
+    "label": "编码规范",
+    "children": [
+      {
+        "id": "code-rule-common",
+        "label": "通用"
+      },
+      {
+        "id": "code-rule-java",
+        "label": "Java"
+      },
+      {
+        "id": "code-rule-js",
+        "label": "JavaScript"
+      },
+      {
+        "id": "code-rule-html",
+        "label": "HTML"
+      },
+      {
+        "id": "code-rule-html",
+        "label": "CSS"
+      }
+    ]
   },
   {
     "id": "rest-rule",
@@ -250,8 +275,6 @@ var autoLoad = function (cb) {
   onAllLoaded = cb;
   Object.keys(polyfill).forEach(function (key) { return laod(key); });
 };
-
-// export config
 
 autoLoad(function () {
   console.log('all polyfills have been dealed');
