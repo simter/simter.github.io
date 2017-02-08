@@ -22,7 +22,7 @@ Vue = 'default' in Vue ? Vue['default'] : Vue;
 
 __$styleInject("html{background-color:#000;color:#888;font-family:微软雅黑,宋体,sans-serif}#app,body,html{height:100%;padding:0;margin:0;overflow:hidden}pre{border:1px solid #2b2b2b;margin:0;padding:.5em;background-color:#001;line-height:1.5em}a{color:#880;text-decoration:none}a:focus{color:#881}",undefined);
 
-__$styleInject("main{counter-reset:main}main h1{counter-reset:b}main h2{counter-reset:c}main h3{counter-reset:d}main h4{counter-reset:e}main h5{counter-reset:f}main h2:before{counter-increment:b;content:counter(b) \". \"}main h3:before{counter-increment:c;content:counter(b) \".\" counter(c) \". \"}main h4:before{counter-increment:d;content:counter(b) \".\" counter(c) \".\" counter(d) \". \"}main h5:before{counter-increment:e;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \". \"}main h6:before{counter-increment:f;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \".\" counter(f) \". \"}.anchor{margin-left:.5em;display:none}h1:hover>.anchor,h2:hover>.anchor,h3:hover>.anchor,h4:hover>.anchor,h5:hover>.anchor,h6:hover>.anchor{display:inline;color:inherit}table{table-layout:fixed;border-spacing:0;background:none;padding:0;margin:0;cursor:default;border-collapse:collapse}tr{height:1.5em}td,th{border:1px solid #2b2b2b;padding:.15em .25em}blockquote{border-style:solid;border-color:blue;border-width:0 0 0 4px;margin:.5em;padding:.25em .5em;background-color:#001;line-height:1.5em}",undefined);
+__$styleInject("main{counter-reset:main}main img{max-width:98%}main h1{counter-reset:b}main h2{counter-reset:c}main h3{counter-reset:d}main h4{counter-reset:e}main h5{counter-reset:f}main h2:before{counter-increment:b;content:counter(b) \". \"}main h3:before{counter-increment:c;content:counter(b) \".\" counter(c) \". \"}main h4:before{counter-increment:d;content:counter(b) \".\" counter(c) \".\" counter(d) \". \"}main h5:before{counter-increment:e;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \". \"}main h6:before{counter-increment:f;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \".\" counter(f) \". \"}.anchor{margin-left:.5em;display:none}h1:hover>.anchor,h2:hover>.anchor,h3:hover>.anchor,h4:hover>.anchor,h5:hover>.anchor,h6:hover>.anchor{display:inline;color:inherit}table{table-layout:fixed;border-spacing:0;background:none;padding:0;margin:0;cursor:default;border-collapse:collapse}tr{height:1.5em}td,th{border:1px solid #2b2b2b;padding:.15em .25em}blockquote{border-style:solid;border-color:blue;border-width:0 0 0 4px;margin:.5em;padding:.25em .5em;background-color:#001;line-height:1.5em}",undefined);
 
 __$styleInject(".layout{height:100%;overflow:hidden;display:flex;flex-direction:column}.layout>header{display:none;flex-grow:0;border-bottom:1px solid #2b2b2b}.layout>header .logo{margin-top:4px}.layout>div{flex-grow:1;display:flex;flex-direction:row}.layout>div>aside{min-width:10em;border-right:1px solid #2b2b2b;padding:1em;overflow:auto}.layout>div>aside>.sidebar{padding-left:0}.layout>div>main{flex-grow:1;padding:1em;overflow:auto}.layout>footer{flex-grow:0;border-top:1px solid #2b2b2b;color:#666;text-align:center;font-size:80%;padding:.25em}.layout>footer a{color:inherit;text-decoration:none}",undefined);
 
@@ -38,10 +38,7 @@ __$styleInject(".tree{list-style-type:none;margin:0;padding-left:1em;line-height
 
 __$styleInject("",undefined);
 
-/**
-   * TreeNode component
-   */
-  var treeNode = {
+var treeNode = {
 render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ node: true, active: _vm.active }},[_c('a',{attrs:{"href":"/charpter/"+_vm.id+".html"},on:{"click":function($event){$event.preventDefault();_vm.activate($event);}}},[_vm._v(_vm._s(_vm.name))]),_vm._v(" "),(_vm.children)?_c('tree',{attrs:{"nodes":_vm.children,"event-hub":_vm.eventHub},on:{"node-activated":function($event){_vm.$emit("node-activated", arguments[0]);}}}):_vm._e()],1)},
 staticRenderFns: [],
     props: {
@@ -110,7 +107,11 @@ var sidebarItems = [
   },
   {
     "id": "rest-rule",
-    "label": "REST 规范"
+    "label": "REST 接口设计规范"
+  },
+  {
+    "id": "task-flow",
+    "label": "任务处理流程"
   },
   {
     "id": "unit-test-rule",
@@ -249,6 +250,8 @@ var autoLoad = function (cb) {
   onAllLoaded = cb;
   Object.keys(polyfill).forEach(function (key) { return laod(key); });
 };
+
+// export config
 
 autoLoad(function () {
   console.log('all polyfills have been dealed');
