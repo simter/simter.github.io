@@ -106,29 +106,7 @@ var sidebarItems = [
   },
   {
     "id": "code-rule",
-    "label": "编码规范",
-    "children": [
-      {
-        "id": "code-rule-common",
-        "label": "通用"
-      },
-      {
-        "id": "code-rule-java",
-        "label": "Java"
-      },
-      {
-        "id": "code-rule-js",
-        "label": "JavaScript"
-      },
-      {
-        "id": "code-rule-html",
-        "label": "HTML"
-      },
-      {
-        "id": "code-rule-html",
-        "label": "CSS"
-      }
-    ]
+    "label": "编码规范"
   },
   {
     "id": "rest-rule",

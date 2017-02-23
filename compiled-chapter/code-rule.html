@@ -1,1 +1,136 @@
-<h2 id=编码规范>编码规范<a class=anchor name=编码规范 href=#编码规范>§</a></h2><p>TODO</p>
+<h1 id="编码规范 - 通用篇">编码规范 - 通用篇<a class=anchor name="编码规范 - 通用篇" href="#编码规范 - 通用篇">§</a></h1><h2 id=概述>概述<a class=anchor name=概述 href=#概述>§</a></h2><p>编码规范的最终目标是不管有多少人共同参与同一项目，确保每一行代码都像是同一个人编写的。</p><p>以下编码规范适用于如下源文件：（不包括那些被编译压缩后的文件）</p><ul><li>Java 源文件</li><li>JSON 源文件</li><li>JavaScript 源文件</li><li>CSS 源文件</li><li>HTML 源文件</li><li>XML 源文件</li></ul><p>对于上述未提到的其它纯文本文档，如无特别注明，一般上也优先遵循此规范。</p><p>这里只定义一般性的编码规范，没有提到的则遵循特定语言的约定规范。</p><blockquote><p><strong>特别注意：</strong>在开发维护旧的项目模块时，需要先确认该模块是否使用了这里规定的编码规范，如果不是，请尽量保留原有的编码规范不变 <em><strong>[b]</strong></em>。如原来是 tab 键缩进的，则保持原来的缩进规范不变，以免两种规范混用导致代码杂乱无章。如果确实在时间、价值上都允许，可以在团队同意后对原有模块进行编码规范重整 <em><strong>[c]</strong></em>，使其统一变为这里的编码规范，实现新的统一。</p></blockquote><h2 id=编码规范>编码规范<a class=anchor name=编码规范 href=#编码规范>§</a></h2><h3 id=文件编码>文件编码<a class=anchor name=文件编码 href=#文件编码>§</a></h3><p>统一使用 <a href=http://baike.baidu.com/item/UTF-8>UTF-8</a> 无 <a href=http://baike.baidu.com/item/BOM/2790401>BOM</a> 编码 <em><strong>[a]</strong></em>。</p><p>以下例外：</p><ul><li>Java 属性文件使用 <a href=http://baike.baidu.com/item/ISO-8859-1>ISO8859-1</a> 编码 <em><strong>[b]</strong></em>，如 <code>resources.properties</code>，并且中文字符需要转换为 Unicode 编码（可使用 <a href=https://native2ascii.net>native2ascii</a> 进行转换） <em><strong>[c]</strong></em></li></ul><blockquote><p>使用 <a href="https://notepad-plus-plus.org/">Notepad++</a> “格式” 菜单下的选项，可以方便的查看当前文档的编码，以及在各种文本编码之间一键转换。</p></blockquote><h3 id=代码缩进>代码缩进<a class=anchor name=代码缩进 href=#代码缩进>§</a></h3><p>统一缩进两个英文空格。不使用制表符 tab，以保证在所有环境下获得一致的展现。</p><p><strong>Java 例子：</strong></p><pre><code class=lang-java>package tech.simter;
+
+public class Utils {
+  public int String add(int a, int b) {
+    return a + b;
+  }
+}
+</code></pre><p><strong>JSON 例子：</strong></p><pre><code class=lang-json>[
+  {&quot;id&quot;: 1, &quot;name&quot;: &quot;ST1&quot;},
+  {
+    &quot;id&quot;: 2, 
+    &quot;name&quot;: &quot;ST2&quot;
+  }
+]
+</code></pre><p><strong>JS 例子：</strong></p><pre><code class=lang-js>function add(a, b) {
+  return a + b;
+}
+
+let c = add(1, 1);
+</code></pre><p><strong>CSS 例子：</strong></p><pre><code class=lang-css>.selector {
+  padding: 15px;
+}
+</code></pre><p><strong>HTML 例子：</strong></p><pre><code class=lang-html>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello world!&lt;/h1&gt;
+    &lt;p&gt;My name is Simter&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p><strong>XML 例子：</strong></p><pre><code class=lang-xml>&lt;project ...&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;parent&gt;
+    &lt;groupId&gt;tech.simter&lt;/groupId&gt;
+    &lt;artifactId&gt;simter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;/parent&gt;
+  &lt;artifactId&gt;simter-hello&lt;/artifactId&gt;
+  &lt;name&gt;simter-hello&lt;/name&gt;
+&lt;/project&gt;
+</code></pre><h3 id=列宽限制与换行对齐>列宽限制与换行对齐<a class=anchor name=列宽限制与换行对齐 href=#列宽限制与换行对齐>§</a></h3><p>一个文本文件可以选择一行 80 个字符、100 个字符或 120 个字符的列宽限制。由于现在用来编码的显示器都基本上是大屏、宽屏，因此我们推荐并坚持使用 <strong>120</strong> 个字符的列宽限制 <em><strong>[a]</strong></em>。</p><blockquote><p>注意这里的字符数是按英文半角字符计算的，1 个全角字符或中文字符是占用 2 个字符的宽度。<a href=https://www.jetbrains.com/idea>IntelliJ IDEA</a> 编辑器默认的列宽限制就是 120，<a href=http://www.eclipse.org>Eclipse</a> 默认则为 80，使用 <a href=http://www.eclipse.org>Eclipse</a> 时需要额外设置一下。</p></blockquote><p>任何一行如果超过这个字符数限制，必须换行 <em><strong>[b]</strong></em>，除了下述例外情况 <em><strong>[c]</strong></em>：</p><ul><li>不可能满足列限制的行 (如一个长 URL) <em><strong>[c1]</strong></em></li><li>Java 的 package 和 import 语句 <em><strong>[c2]</strong></em></li><li>注释中那些可能被剪切并粘贴到 shell 中的命令行 <em><strong>[c3]</strong></em></li></ul><p>不能在单词的中间换行 <em><strong>[d]</strong></em>，换行时缩进至少 +2 个空格 <em><strong>[e]</strong></em>，推荐按需添加更多的空格来对齐相应的元素（推荐但不强制要求） <em><strong>[f]</strong></em>。如：</p><ul><li>Java、JS 方法参数多导致要换行时</li></ul><pre><code class=lang-java>// Java 换行缩进并对齐第一个参数（推荐）
+public void methodName(String arg11, String arg12 ... String arg1N
+                       String arg21, String arg22 ... String arg2N) {
+  ...
+}
+
+// Java 换行缩进 2 个空格
+public void methodName(String arg11, String arg12 ... String arg1N
+  String arg21, String arg22 ... String arg2N) {
+  ...
+}
+</code></pre><pre><code class=lang-js>// JS 换行缩进并对齐第一个参数（推荐）
+function methodName(arg11, arg12 ... arg1N
+                    arg21, arg22 ... arg2N) {
+  ...
+}
+
+// JS 换行缩进 2 个空格
+function methodName(arg11, arg12 ... arg1N
+  arg21, arg22 ... arg2N) {
+  ...
+}
+</code></pre><ul><li>HTML 或 XML 的节点属性多换行时</li></ul><pre><code class=lang-xml>// XML 换行缩进并对齐第一个属性（推荐）
+&lt;X attr11=&quot;v11&quot; attr12=&quot;v12&quot; ... attr1n=&quot;v1N&quot;
+   attr21=&quot;v21&quot; attr22=&quot;v22&quot; ... attr2n=&quot;v2N&quot;
+   attr31=&quot;v31&quot; attr32=&quot;v32&quot; ... attr3n=&quot;v3N&quot;&gt;
+&lt;/X&gt;
+&lt;XXX attr11=&quot;v11&quot; attr12=&quot;v12&quot; ... attr1n=&quot;v1N&quot;
+     attr21=&quot;v21&quot; attr22=&quot;v22&quot; ... attr2n=&quot;v2N&quot;
+     attr31=&quot;v31&quot; attr32=&quot;v32&quot; ... attr3n=&quot;v3N&quot;&gt;
+&lt;/XXX&gt;
+
+
+// XML 换行缩进 2 个空格
+&lt;XXX attr11=&quot;v11&quot; attr12=&quot;v12&quot; ... attr1n=&quot;v1N&quot;
+  attr21=&quot;v21&quot; attr22=&quot;v22&quot; ... attr2n=&quot;v2N&quot;&gt;
+&lt;/XXX&gt;
+</code></pre><h3 id=常量命名>常量命名<a class=anchor name=常量命名 href=#常量命名>§</a></h3><p>统一使用 <code>CONSTANT_CASE</code> 格式（即所有字母大写，单词使用下划线分隔）。</p><p><strong>正确的常量命名：</strong></p><pre><code>// JAVA
+public static final String MY_COLOR_RED = &quot;red&quot;;
+
+// JS
+const MY_COLOR_RED = &#39;red&#39;;
+</code></pre><p><strong>不正确的常量命名：</strong></p><pre><code>// JAVA
+public static final String MYCOLOR_RED = &quot;red&quot;;
+public static final String MyColorRed = &quot;red&quot;;
+
+// JS
+const MYCOLOR_RED = &#39;red&#39;;
+const MyColorRed = &#39;red&#39;;
+</code></pre><h3 id=变量和方法命名>变量和方法命名<a class=anchor name=变量和方法命名 href=#变量和方法命名>§</a></h3><p>变量和方法名称使用第一个单词首字母小写，后面其它单词首字母大写的小驼峰命名方式（little-camel-case）。</p><p><strong>正确的命名：</strong>(mySimpleMethod、mid)</p><pre><code>// JAVA
+public int mySimpleMethod(int a, int b, int c) {
+  int mid = 2 * (a + b);
+  return mid + c;
+}
+
+// JS
+function mySimpleMethod(var a, var b, var c) {
+  let mid = 2 * (a + b);
+  return mid + c;
+}
+</code></pre><p><strong>不正确的命名：</strong>(MySimpleMethod、_mid)</p><pre><code>// JAVA
+public int MySimpleMethod(int a, int b, int c) { // 大写开头
+  int _mid = 2 * (a + b); // 下划线开头
+  return _mid + c;
+}
+
+// JS
+function MySimpleMethod(var a, var b, var c) {
+  let _mid = 2 * (a + b);
+  return _mid + c;
+}
+</code></pre><h3 id="Java 类名（class）">Java 类名（class）<a class=anchor name="Java 类名（class）" href="#Java 类名（class）">§</a></h3><p>类名使用所有单词首字母大写的大驼峰命名方式（big-camel-case） <em><strong>[a]</strong></em>。类名与类所保存的文件名称也要一一对应相同 <em><strong>[b]</strong></em>。</p><p><strong>正确的命名：</strong>(DateUtils)</p><pre><code>// JAVA
+public final class DateUtils{
+  ...
+}
+</code></pre><p><strong>不正确的命名：</strong>(dateUtils)</p><pre><code>// JAVA
+public final class dateUtils{
+  ...
+}
+</code></pre><h3 id="Java 包名（package）">Java 包名（package）<a class=anchor name="Java 包名（package）" href="#Java 包名（package）">§</a></h3><p>Java 包名使用所有字母小写的形式 <em><strong>[a]</strong></em>，单词间不作任何形式的区分。包名与文件夹名称也要一一对应相同 <em><strong>[b]</strong></em>。</p><p><strong>正确的命名：</strong>(DateUtils)</p><pre><code>// JAVA
+package org.springframework;
+package com.abcframework;
+</code></pre><p><strong>不正确的命名：</strong></p><pre><code>// JAVA
+package org.springFramework;
+package com.SpringFramework;
+</code></pre><h3 id="HTML 标记的自定义属性命名">HTML 标记的自定义属性命名<a class=anchor name="HTML 标记的自定义属性命名" href="#HTML 标记的自定义属性命名">§</a></h3><p>由于 HTML 标记的属性是不区分大小写的，因此使用单词间用中横线连接的 kebab-case 命名方式 <em><strong>[a]</strong></em>。并且在编写 HTML 文档时，统一使用小写字母的标记 <em><strong>[b]</strong></em>。</p><p><strong>正确的命名：</strong>（name、fuzzy-value）</p><pre><code>&lt;div data-name=&#39;st&#39;
+     data-fuzzy-value=&#39;abc&#39;
+...
+&lt;/div&gt;
+</code></pre><p><strong>不正确的命名：</strong>（DIV、Name、fuzzyValue）</p><pre><code>&lt;DIV data-Name=&#39;st&#39;
+     data-fuzzyValue=&#39;abc&#39;
+...
+&lt;/DIV&gt;
+</code></pre><h2 id=参考>参考<a class=anchor name=参考 href=#参考>§</a></h2><ul><li><a href="http://www.vaikan.com/coding-standards/">编码规范集锦</a></li><li><a href=http://lxr.linux.no/linux/Documentation/CodingStyle>Linux内核编码风格</a></li><li>Google 开源项目风格指南: <a href=https://google.github.io/styleguide>官方英文版</a>-<a href=https://github.com/google/styleguide>Github</a>、<a href=http://zh-google-styleguide.readthedocs.io>中文翻译版</a>-<a href=https://github.com/zh-google-styleguide/zh-google-styleguide>Github</a></li><li><a href=http://www.hawstein.com/posts/google-java-style.html>Google Java 编程风格指南 - Hawstein 翻译</a></li><li><a href=http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html>Oracle 官方的 Java 语言编码规范</a></li><li><a href="http://codeguide.bootcss.com/">codeguide.bootcss.com - 编码规范 by @mdo</a></li><li><a href=http://itmyhome.com/html>麦田: HTML 编码规范</a></li><li><a href=https://zhongsp.gitbooks.io/typescript-handbook/content/doc/wiki/coding_guidelines.html>TypeScript 开发团队编码规范</a></li><li><a href=http://www.infoq.com/cn/news/2014/02/google-java-coding-standards>InfoQ: Google 的 Java 编码规范</a></li><li><a href=https://psr.phphub.org>PHP 标准规范</a></li><li><a href=http://www.vaikan.com/things-everyone-should-do-code-review>谷歌是如何做代码审查的</a></li><li><a href=http://www.vaikan.com/google-coding-standards>为什么谷歌要执行严格的代码编写规范</a></li></ul>
