@@ -1,1 +1,69 @@
-<h2 id=单元测试>单元测试<a class=anchor name=单元测试 href=#单元测试>§</a></h2>
+<h1 id=单元测试>单元测试<a class=anchor name=单元测试 href=#单元测试>§</a></h1><p>单元测试的起步依赖于如下版本：</p><ul><li><a href=http://junit.org>Junit</a>-v4.12+</li><li><a href=http://mockito.org>Mockito</a>-v2.7.13+</li><li><a href=http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#overview-testing>Spring-Test</a>-v4.3.7+</li></ul><h2 id="使用 Junit">使用 Junit<a class=anchor name="使用 Junit" href="#使用 Junit">§</a></h2><p><a href=http://junit.org>Junit</a> 测试属于程序员测试，即所谓白盒测试，因为程序员知道被测试的软件如何（How）完成功能和完成什么样（What）的功能。</p><p>单元测试的目的是全面了解程序内部<strong>逻辑</strong>结构、对所有逻辑路径进行测试，保证程序逻辑的正确性。</p><h3 id=初级篇>初级篇<a class=anchor name=初级篇 href=#初级篇>§</a></h3><ol><li><p>编写测试代码</p><blockquote><p>定义一个没有返回值的 public 方法，为此方法添加 @Test 注解，然后在方法体内执行要测试的代码，最后执行断言判断代码的执行是否正确：</p></blockquote><pre><code class=lang-java> import static org.junit.Assert.assertEquals;
+ import org.junit.Test;
+
+ public class MyTest {
+ @Test                               // 1) 添加注解
+ public void evaluatesExpression() { // 2) 无返回值的 public 方法
+   int result = Utils.add(1, 2);     // 3) 执行业务代码
+
+   assertEquals(3, result);          // 4) 断言结果的正确性
+ }
+</code></pre></li><li><p>运行测试</p><ul><li>方法 1： 命令行执行 <code>mvn test</code>，详见 [<mvn test 的默认行为>]。(<a href=http://rongjih.blog.163.com/blog/static/335744612010102911363452>http://rongjih.blog.163.com/blog/static/335744612010102911363452</a>)</mvn></li><li>方法 2： 在 IntelliJ IDEA 中点击测试类或测试方法名称，右键菜单选择 <code>Run &#39;xxx&#39;</code>。</li><li>方法 3： 在 Eclipse neon 中点击测试类或测试方法名称，右键菜单选择 <code>Run As / Junit Test</code>。</li></ul></li></ol><h3 id="JUnit 断言"><a href=https://github.com/junit-team/junit4/wiki/Assertions>JUnit 断言</a><a class=anchor name="JUnit 断言" href="#JUnit 断言">§</a></h3><h4 id="JUnit 4.4+ 新断言语法 assertThat">JUnit 4.4+ 新断言语法 <code>assertThat</code><a class=anchor name="JUnit 4.4+ 新断言语法 assertThat" href="#JUnit 4.4+ 新断言语法 assertThat">§</a></h4><p><a href=http://junit.org>Junit</a> 4.4 学习 <a href="http://www.jmock.org/">JMock</a>，引入了 <a href=http://hamcrest.org>Hamcrest</a> 匹配机制，使 assert 语句具有更强的可读性、灵活性，那就是新的 <code>org.junit.Assert#assertThat</code>。新的 assertThat 可以代替以前所有的经典断言语句，但是以前的所有 assert 语句仍然可以继续使用。</p><p><strong>assertThat 基本语法：</strong></p><ol><li><code>assertThat(actual, matcher)</code></li><li><code>assertThat(reason, actual, matcher)</code></li></ol><p>其中：</p><ul><li>reason - 测试失败时提供的错误提示信息</li><li>actual - 要测试的值</li><li>matcher - 用匹配符 org.hamcrest.Matcher 来表达的对前面变量所期望值的声明，如果 actual 值与 matcher 所表达的期望值相符，则测试成功，否则测试失败</li></ul><blockquote><p><a href=http://junit.org>JUnit</a> 4.4~4.10 自带了一些 <a href=http://hamcrest.org>Hamcrest</a> 的匹配符 Matcher（<code>org.hamcrest.CoreMatchers.*</code>），会与 <a href=http://hamcrest.org>Hamcrest</a> 官网的 <code>org.hamcrest:hamcrest-core:[version]</code> 包产生冲突，导致 Matcher 重复定义，编译可能会出错（ambiguous for the type）。但从 <a href=http://junit.org>JUnit</a> 4.11+ 开始，<a href=http://junit.org>JUnit</a> 移除了之前自带的 <code>org.hamcrest</code> 包，改为直接依赖 <a href=http://hamcrest.org>Hamcrest</a> 官网的 <code>org.hamcrest:hamcrest-core:[version]</code> 从而避免了这个问题。</p><p>org.hamcrest.CoreMatchers.<em>只有有限的几个 Matcher，如果想使用一些其他更多的匹配符 Matcher，可以添加依赖 <a href=http://hamcrest.org>Hamcrest</a> 官网的 <code>org.hamcrest:hamcrest-library:[version]</code> 包，更多的 Matcher 都在类 <code>org.hamcrest.Matchers</code> 中定义了，在代码中 `import static org.hamcrest.Matchers.</em><code>即可，详见 [这里](https://code.google.com/archive/p/hamcrest/wikis/Tutorial.wiki)。注意</code>org.hamcrest.Matchers<code>已包含了</code>org.hamcrest.CoreMatchers` 中的所有 Matcher 了。</p></blockquote><p><strong>assertThat 例子：</strong></p><pre><code>assertThat(x, is(y)) // === assertThat(x, is(equalTo(y)))
+assertThat(x, isA(y)) // === assertThat(x, is(instanceOf(y.class)))
+assertThat(x, equalTo(y))
+assertThat(x, not(equalTo(3)))
+assertThat(x, sameInstance(y)) // === assertThat(x, theInstance(y))
+assertThat(x, nullValue(3))
+assertThat(x, notNullValue(3))
+assertThat(x, allOf(containsString(&quot;a&quot;), containsString(&quot;b&quot;)))
+assertThat(x, endsWith(&quot;Test&quot;))
+assertThat(x, endsWith(&quot;Test&quot;))
+assertThat(x, lessThanOrEqualTo (16.0)) // 小于等于, 需要 hamcrest-library
+assertThat(x, closeTo(20.0, 0.5)) // 20.0±0.5范围之内, 需要 hamcrest-library
+assertThat(mapObject, hasEntry(&quot;key&quot;, &quot;value&quot;)), 需要 hamcrest-library
+</code></pre><p><strong><a href=http://hamcrest.org>Hamcrest</a> 常见的匹配器：</strong></p><ul><li>Core<ul><li>anything - 任何时候都匹配</li><li>describedAs - 添加自定义不匹配描述信息</li><li>is - 用来改善可读性的修饰符，如 is(y) 相当与 is(equalTo(y))</li></ul></li><li>Logical 逻辑运算<ul><li>allOf - 与匹配 (类似 Java &amp;&amp;)</li><li>anyOf - 或匹配 (类似 Java ||)</li><li>not - 反转匹配</li></ul></li><li>Object 对象<ul><li>equalTo - 使用 Object.equals 方法判断是否相等的匹配</li><li>hasToString - 判断对象 toString 方法的返回值是否匹配</li><li>instanceOf, isCompatibleType - 类型匹配</li><li>notNullValue, nullValue - null 匹配</li><li>sameInstance - 对象实例匹配</li></ul></li><li>Beans<ul><li>hasProperty - JavaBeans 属性匹配</li></ul></li><li>Collections 数组、集合<ul><li>array - test an array&#39;s elements against an array of matchers</li><li>hasEntry, hasKey, hasValue - test a map contains an entry, key or value</li><li>hasItem, hasItems - 测试集合中是否包含既定元素</li><li>hasItemInArray - 测试数组中是否包含指定元素</li></ul></li><li>Number 数值<ul><li>closeTo - 浮点值的精度测试</li><li>greaterThan, greaterThanOrEqualTo, lessThan, lessThanOrEqualTo - 大小比较</li></ul></li><li>Text 文本<ul><li>equalToIgnoringCase - 忽略大小写的匹配</li><li>equalToIgnoringWhiteSpace - 忽略前后空白字符、而内部连续的空白字符视作1个空白字符的匹配</li><li>containsString, endsWith, startsWith - 字符串匹配</li></ul></li></ul><p><strong>更多第三方 Matcher:</strong></p><ul><li><a href=https://github.com/tobyweston/simple-excel>Excel spreadsheet matchers</a></li><li><a href=https://github.com/hertzsprung/hamcrest-json>JSON matchers</a></li><li><a href=https://github.com/davidehringer/xml-matchers>XML/XPath matchers</a></li></ul><h4 id="JUnit 4 经典断言">JUnit 4 经典断言<a class=anchor name="JUnit 4 经典断言" href="#JUnit 4 经典断言">§</a></h4><pre><code class=lang-java>import static org.junit.Assert.fail;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertArrayEquals;
+
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+</code></pre><h3 id=高级特征>高级特征<a class=anchor name=高级特征 href=#高级特征>§</a></h3><ol><li>@Before : 在执行每个测试方法前都运行一次设置<pre><code class=lang-java> @Before  // org.junit.Before
+ public void setup() {...}
+</code></pre></li><li>@After : 在执行每个测试方法后都运行一次清理<pre><code class=lang-java> @After  // org.junit.After
+ public void teardown() {...}
+</code></pre></li><li>@BeforeClass : 在执行所有测试方法之前运行一次公共的设置<pre><code class=lang-java> @BeforeClass  // org.junit.BeforeClass
+ public static void setupOnlyOnce() {...}
+</code></pre></li><li>@AfterClass : 在执行完所有测试方法之后运行一次清理<pre><code class=lang-java> @AfterClass  // org.junit.AfterClass
+ public static void teardownOnlyOnce() {...}
+</code></pre></li><li>测试异常 : <code>@Test(expected=xxx.class)</code></li><li>测试超时(毫秒) : <code>@Test(timeout=xxx)</code> - 超过这个时间自动强行终止，测试失败</li><li>忽略测试 : <code>@ignore(&quot;xxx&quot;)</code> - 修饰类或方法，可与 <code>@Test</code> 一齐使用</li><li>运行器 <code>@RunWith(xxx.class)</code><blockquote><p>修饰类，如果无指定 <code>Junit</code> 默认使用 <code>@RunWith(TestClassRunner.class)</code> 运行器。<br>一些第三方包扩展了自己的运行器，如:</p><ul><li>与 <code>Spring-Test</code> 整合时使用 <code>@RunWith(SpringRunner.class)</code></li><li>与 <code>Mockito</code> 整合时使用 <code>@RunWith(MockitoJunitRunner.StrictStubs.class)</code></li></ul></blockquote></li><li><p>参数化测试 @RunWith(Parameterized.class)</p><blockquote><p>修饰类，详见 <a href=https://github.com/junit-team/junit4/wiki/Parameterized-tests>Parameterized tests</a>， 用于简化多值参数函数的测试。</p></blockquote></li><li><p><a href=https://github.com/junit-team/junit4/wiki/Aggregating-tests-in-suites>聚合测试套件</a> - 将多个测试类汇集在一起运行</p><pre><code class=lang-java>import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({Business1Test.class, Business2Test.class, ...})
+public class AllTests {}
+</code></pre></li><li><p>假设机制 <a href=https://github.com/junit-team/junit4/wiki/Assumptions-with-assume>Assumption</a> - JUnit4.4+</p><blockquote><p>用于假设一定的条件满足了才运行相应的测试代码。如某个测试必须在 Windows 环境下才有效时，在其它环境下就应该被忽略。</p><p>使用 org.junit.Assume.assumeThat 来实现假设机制，assumeThat 的语法与 assertThat 类似，但 assumeThat 的结果一旦被判断为不匹配，则 assumeThat 之后的代码不会执行，测试方法将立即退出，并将测试结果标记为 ignored（针对 @Test 方法。如果是 @Theory 方法，就算 assumeThat 不成立，只要至少有一个 @DataPoint 通过，也会测试通过，如果没有一个 @DataPoint 满足 assumeThat，则会 failed）。</p></blockquote><p>例子：</p><pre><code class=lang-java>import static org.junit.Assume.*
+@Test public void filenameIncludesUsername() {
+  assumeThat(File.separatorChar, is(&#39;/&#39;));
+  assertThat(new User(&quot;optimus&quot;).configFileName(), is(&quot;configfiles/optimus.cfg&quot;));
+}
+</code></pre></li><li><p>理论机制 <a href=https://github.com/junit-team/junit4/wiki/Theories>@Theory</a> - JUnit4.4+</p><blockquote><p>理论就是对那些需要无穷个测试用例才能正确描述的代码行为的概括性陈述。</p><p>在 JUnit 的理论机制中，每个测试方法不再是由注释 @Test 指定的无参测试函数，而是由注释 @Theory 指定的带参数的测试函数，这些参数来自一个通过注释 @DataPoint 指定的数据集。JUnit 会自动将数据集中定义的数据类型和理论测试方法定义的参数类型进行比较，如果类型相同，会将数据集中的数据通过参数一一传入到测试方法中逐个执行。</p></blockquote><p>例子：</p><pre><code class=lang-java>@RunWith(Theories.class)
+public class UserTest {
+  @DataPoint
+  public static String GOOD_USERNAME = &quot;optimus&quot;;
+  @DataPoint
+  public static String USERNAME_WITH_SLASH = &quot;optimus/prime&quot;;
+
+  @Theory
+  public void filenameIncludesUsername(String username) {
+    assumeThat(username, not(containsString(&quot;/&quot;)));
+    assertThat(new User(username).configFileName(), containsString(username));
+  }
+}
+</code></pre></li></ol><h2 id="使用 Spring-Test">使用 <a href=http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#overview-testing>Spring-Test</a><a class=anchor name="使用 Spring-Test" href="#使用 Spring-Test">§</a></h2><h2 id="使用 Mockito">使用 <a href=http://mockito.org>Mockito</a><a class=anchor name="使用 Mockito" href="#使用 Mockito">§</a></h2><h2 id=友情链接>友情链接<a class=anchor name=友情链接 href=#友情链接>§</a></h2><ul><li><a href=http://www.ibm.com/developerworks/cn/java/j-lo-junit44/index.html>探索 JUnit 4.4 新特性</a></li><li>[AssertJ - Fluent assertions for java] (<a href=http://joel-costigliola.github.io/assertj>http://joel-costigliola.github.io/assertj</a>)</li></ul>
