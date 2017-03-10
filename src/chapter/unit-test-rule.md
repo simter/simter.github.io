@@ -1,18 +1,16 @@
-# 单元测试
+# 概述
 
-单元测试的起步依赖于如下版本：
+单元测试的目的是全面了解程序内部**逻辑**结构、对所有逻辑路径进行测试，保证程序逻辑的正确性。
+
+单元测试属于程序员测试，即所谓白盒测试，因为程序员知道被测试的软件如何（How）完成功能和完成什么样（What）的功能。
+
+我们单元测试以 [JUnit] 为基础，起步依赖于如下版本：
 
 - [Junit]-v4.12+
 - [Mockito]-v2.7.13+
 - [Spring-Test]-v4.3.7+
 
-## 使用 Junit
-
-[Junit] 测试属于程序员测试，即所谓白盒测试，因为程序员知道被测试的软件如何（How）完成功能和完成什么样（What）的功能。
-
-单元测试的目的是全面了解程序内部**逻辑**结构、对所有逻辑路径进行测试，保证程序逻辑的正确性。
-
-### 初级篇
+## Junit 基础
 
 1. 编写测试代码
     > 定义一个没有返回值的 public 方法，为此方法添加 @Test 注解，然后在方法体内执行要测试的代码，最后执行断言判断代码的执行是否正确：
@@ -26,7 +24,7 @@
     public void evaluatesExpression() { // 2) 无返回值的 public 方法
       int result = Utils.add(1, 2);     // 3) 执行业务代码
 
-      assertEquals(3, result);          // 4) 断言结果的正确性
+      assertThat(3, is(result));        // 4) 断言结果的正确性
     }
     ```
 
@@ -35,11 +33,11 @@
     - 方法 2： 在 IntelliJ IDEA 中点击测试类或测试方法名称，右键菜单选择 `Run 'xxx'`。
     - 方法 3： 在 Eclipse neon 中点击测试类或测试方法名称，右键菜单选择 `Run As / Junit Test`。
 
-### [JUnit 断言](https://github.com/junit-team/junit4/wiki/Assertions)
+## [JUnit 断言](https://github.com/junit-team/junit4/wiki/Assertions)
 
-#### JUnit 4.4+ 新断言语法 `assertThat`
+### JUnit 4.4+ 新断言语法 `assertThat`
 
-[Junit] 4.4 学习 [JMock]，引入了 [Hamcrest] 匹配机制，使 assert 语句具有更强的可读性、灵活性，那就是新的 `org.junit.Assert#assertThat`。新的 assertThat 可以代替以前所有的经典断言语句，但是以前的所有 assert 语句仍然可以继续使用。
+[Junit] 4.4 学习了 [JMock]，引入了 [Hamcrest] 匹配机制，使 assert 语句具有更强的可读性、灵活性，那就是新的 `org.junit.Assert#assertThat`。新的 assertThat 可以代替以前所有的经典断言语句，但是以前的所有 assert 语句仍然可以继续使用。
 
 **assertThat 基本语法：**
 
@@ -58,7 +56,7 @@
 
 **assertThat 例子：**
 
-```
+```java
 assertThat(x, is(y)) // === assertThat(x, is(equalTo(y)))
 assertThat(x, isA(y)) // === assertThat(x, is(instanceOf(y.class)))
 assertThat(x, equalTo(y))
@@ -111,7 +109,9 @@ assertThat(mapObject, hasEntry("key", "value")), 需要 hamcrest-library
 - [JSON matchers](https://github.com/hertzsprung/hamcrest-json)
 - [XML/XPath matchers](https://github.com/davidehringer/xml-matchers)
 
-#### JUnit 4 经典断言
+### JUnit 4 经典断言
+
+直接看下面的代码就明白了：
 
 ```java
 import static org.junit.Assert.fail;
@@ -129,7 +129,22 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 ```
 
-### 高级特征
+例子：
+
+```java
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+public class MyTest {
+@Test
+public void test1() {
+    int result = Utils.add(1, 2);
+
+    assertEquals(3, result);
+}
+```
+
+## JUnit 进阶特征
 
 1. @Before : 在执行每个测试方法前都运行一次设置  
     ```java
@@ -209,11 +224,44 @@ import static org.junit.Assert.assertNotNull;
     }
     ```
 
-## 使用 [Spring-Test]
-
-
-
 ## 使用 [Mockito]
+
+Mockito 创建 Mock 有两种方式。
+
+1. 为整个接口提供虚拟的实现
+    - 注解式 - 使用 @Mock 注解
+        ```java
+        public class MyTest {
+          @Mock
+          MyInterface my;
+        
+          @Before
+          public void setup() {
+            assertNull(my);
+            MockitoAnnotations.initMocks(this);
+            assertNotNull(my);
+          }
+        }
+        ```
+    - 代码式 - 使用 mock 方法
+        ```java
+        MyImpl my = org.mockito.Mockito.mock(MyInterface.class)
+        ```
+
+2. 为对象实例加一个动态代理，为实例的部分方法提供虚拟的实现
+    - 注解式 - 使用 @Spy 注解
+        ```java
+        public class MyTest {
+          @Spy
+          MyInterface my = new MyInterfaceImpl();
+        }
+        ```
+    - 代码式 - 使用 spy 方法
+        ```java
+        MyImpl my = org.mockito.Mockito.spy(new MyInterfaceImpl());
+        ```
+
+## 使用 [Spring-Test]
 
 
 
