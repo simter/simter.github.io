@@ -97,7 +97,7 @@ staticRenderFns: [],
     }
   };
 
-var about = "<h1 id=\"-\">概述</h1>\n<p><a href=\"https://github.com/simter\">Simter</a> 组件、应用的说明文档。本文档托管在 <a href=\"https://github.com/simter/simter.github.io\">https://github.com/simter/simter.github.io</a>。</p>\n";
+var about = "<h1 id=\"-\">概述</h1>\n<p><a href=\"https://github.com/simter\">Simter</a> 组件、应用的说明文档，通过域名 <a href=\"http://simter.tech\">simter.tech</a> 可以直接访问。</p>\n<p>文档托管在如下两个地方：</p>\n<ul>\n<li>Github : <a href=\"https://github.com/simter/simter.github.io\">源码</a>、<a href=\"https://simter.github.io\">文档</a></li>\n<li>开源中国码云 : <a href=\"https://git.oschina.net/simter/simter\">源码</a>、<a href=\"https://simter.oschina.io\">文档</a></li>\n</ul>\n";
 
 var sidebarItems = [
   {
@@ -107,6 +107,10 @@ var sidebarItems = [
   {
     "id": "code-rule",
     "label": "编码规范"
+  },
+  {
+    "id": "git-flow",
+    "label": "Git 协作规范"
   },
   {
     "id": "rest-rule",
