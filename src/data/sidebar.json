@@ -8,6 +8,10 @@
     "label": "编码规范"
   },
   {
+    "id": "git-flow",
+    "label": "Git 协作规范"
+  },
+  {
     "id": "rest-rule",
     "label": "REST 接口设计规范"
   },
