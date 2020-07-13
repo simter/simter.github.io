@@ -1,7 +1,7 @@
 (function (Vue) {
 'use strict';
 
-function __$styleInject(css, returnValue) {
+function __$styleInject (css, returnValue) {
   if (typeof document === 'undefined') {
     return returnValue;
   }
@@ -20,7 +20,7 @@ function __$styleInject(css, returnValue) {
 
 Vue = 'default' in Vue ? Vue['default'] : Vue;
 
-__$styleInject("html{background-color:#000;color:#888;font-family:微软雅黑,宋体,sans-serif}#app,body,html{height:100%;padding:0;margin:0;overflow:hidden}#app>div{overflow:hidden}pre{border:1px solid #2b2b2b;margin:0;padding:.5em;background-color:#001;line-height:1.5em}a{color:#880;text-decoration:none}a:focus{color:#881}",undefined);
+__$styleInject("html{background-color:#000;color:#888;font-family:微软雅黑,宋体,sans-serif}#app,body,html{height:100%;padding:0;margin:0}#app,#app>div,body,html{overflow:hidden}pre{border:1px solid #2b2b2b;margin:0;padding:.5em;background-color:#001;line-height:1.5em}a{color:#880;text-decoration:none}a:focus{color:#881}",undefined);
 
 __$styleInject("main{counter-reset:main}main img{max-width:98%}main h1{counter-reset:b}main h2{counter-reset:c}main h3{counter-reset:d}main h4{counter-reset:e}main h5{counter-reset:f}main h2:before{counter-increment:b;content:counter(b) \". \"}main h3:before{counter-increment:c;content:counter(b) \".\" counter(c) \". \"}main h4:before{counter-increment:d;content:counter(b) \".\" counter(c) \".\" counter(d) \". \"}main h5:before{counter-increment:e;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \". \"}main h6:before{counter-increment:f;content:counter(b) \".\" counter(c) \".\" counter(d) \".\" counter(e) \".\" counter(f) \". \"}.anchor{margin-left:.5em;display:none}h1:hover>.anchor,h2:hover>.anchor,h3:hover>.anchor,h4:hover>.anchor,h5:hover>.anchor,h6:hover>.anchor{display:inline;color:inherit}table{table-layout:fixed;border-spacing:0;background:none;padding:0;margin:0;cursor:default;border-collapse:collapse}tr{height:1.5em}td,th{border:1px solid #2b2b2b;padding:.15em .25em}blockquote{border-style:solid;border-color:blue;border-width:0 0 0 4px;margin:.5em;padding:.25em .5em;background-color:#001;line-height:1.5em}",undefined);
 
